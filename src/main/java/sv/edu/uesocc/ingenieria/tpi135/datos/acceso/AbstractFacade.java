@@ -22,20 +22,64 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
-        getEntityManager().persist(entity);
+    public void crear(T entity) {
+        //getEntityManager().persist(entity);
+        EntityManager em = getEntityManager();
+        try {
+            if (entity != null) {
+                if (em != null) {
+                    em.persist(entity);
+                }
+                throw new IllegalStateException("El entity manager es nulo");
+            }
+            throw new IllegalArgumentException("La entidad recibida es nula");
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex);
+        }
     }
 
-    public void edit(T entity) {
-        getEntityManager().merge(entity);
+    public void editar(T entity) {
+        //getEntityManager().merge(entity);
+        EntityManager em = getEntityManager();
+        try {
+            if (entity != null) {
+                if (em != null) {
+                    em.merge(entity);
+                }
+                throw new IllegalStateException("El entity manager es nulo");
+            }
+            throw new IllegalArgumentException("La entidad recibida es nula");
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex);
+        }
     }
 
-    public void remove(T entity) {
-        getEntityManager().remove(getEntityManager().merge(entity));
+    public void remover(T entity) {
+        //getEntityManager().remove(getEntityManager().merge(entity));
+        EntityManager em = getEntityManager();
+        try {
+            if (entity != null) {
+                if (em != null) {
+                    em.remove(getEntityManager().merge(entity));
+                }
+                throw new IllegalStateException("El entity manager es nulo");
+            }
+            throw new IllegalArgumentException("La entidad recibida es nula");
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex);
+        }
     }
 
-    public T find(Object id) {
-        return getEntityManager().find(entityClass, id);
+    public T findById(Object id) {
+        //return getEntityManager().find(entityClass, id);
+        if (id != null) {
+            EntityManager em = getEntityManager();
+            if (em != null) {
+                return (T) em.find(entityClass, id);
+            }
+            throw new IllegalStateException("El entity manager es nulo");
+        }
+        throw new IllegalArgumentException("La id es nulo" + id);
     }
 
     public List<T> findAll() {
@@ -44,12 +88,12 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<T> findRange(int[] range) {
+    public List<T> findRange(int inicio, int tamanio) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
-        q.setMaxResults(range[1] - range[0] + 1);
-        q.setFirstResult(range[0]);
+        q.setMaxResults(tamanio);
+        q.setFirstResult(inicio);
         return q.getResultList();
     }
 
@@ -60,5 +104,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleVenta;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class DetalleVentaFacade extends AbstractFacade<DetalleVenta> implements DetalleVentaFacadeLocal {
 

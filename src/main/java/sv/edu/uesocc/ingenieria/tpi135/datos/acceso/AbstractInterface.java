@@ -6,14 +6,26 @@
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
 import java.util.List;
-import javax.ejb.Local;
-import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleVenta;
 
 /**
  *
- * @author jonahdz
+ * @author luis21
  */
-@Local
-public interface DetalleVentaFacadeLocal extends AbstractInterface<DetalleVenta>{
+public interface AbstractInterface<T> {
+    
+    void crear(T entity);
+    
+    void editar(T entity);
+    
+    void remover(T entity);
+    
+    T findById(Object id);
+
+    List<T> findAll();
+
+    List<T> findRange(int inicio, int tamanio);
+
+    int count();
+
     
 }

@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Contacto;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Contacto;
  * @author jonahdz
  */
 @Local
-public interface ContactoFacadeLocal {
-
-    void create(Contacto contacto);
-
-    void edit(Contacto contacto);
-
-    void remove(Contacto contacto);
-
-    Contacto find(Object id);
-
-    List<Contacto> findAll();
-
-    List<Contacto> findRange(int[] range);
-
-    int count();
+public interface ContactoFacadeLocal extends AbstractInterface<Contacto>{
     
 }

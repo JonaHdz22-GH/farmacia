@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Descuento;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Descuento;
  * @author jonahdz
  */
 @Local
-public interface DescuentoFacadeLocal {
-
-    void create(Descuento descuento);
-
-    void edit(Descuento descuento);
-
-    void remove(Descuento descuento);
-
-    Descuento find(Object id);
-
-    List<Descuento> findAll();
-
-    List<Descuento> findRange(int[] range);
-
-    int count();
+public interface DescuentoFacadeLocal extends AbstractInterface<Descuento>{
     
 }

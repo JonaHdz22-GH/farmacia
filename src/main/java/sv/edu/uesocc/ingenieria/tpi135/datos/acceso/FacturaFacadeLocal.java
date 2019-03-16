@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Factura;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Factura;
  * @author jonahdz
  */
 @Local
-public interface FacturaFacadeLocal {
-
-    void create(Factura factura);
-
-    void edit(Factura factura);
-
-    void remove(Factura factura);
-
-    Factura find(Object id);
-
-    List<Factura> findAll();
-
-    List<Factura> findRange(int[] range);
-
-    int count();
+public interface FacturaFacadeLocal extends AbstractInterface<Factura>{
     
 }

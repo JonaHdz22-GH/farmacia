@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.PresentacionProducto;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.PresentacionProducto;
  * @author jonahdz
  */
 @Local
-public interface PresentacionProductoFacadeLocal {
-
-    void create(PresentacionProducto presentacionProducto);
-
-    void edit(PresentacionProducto presentacionProducto);
-
-    void remove(PresentacionProducto presentacionProducto);
-
-    PresentacionProducto find(Object id);
-
-    List<PresentacionProducto> findAll();
-
-    List<PresentacionProducto> findRange(int[] range);
-
-    int count();
+public interface PresentacionProductoFacadeLocal extends AbstractInterface<PresentacionProducto>{
     
 }

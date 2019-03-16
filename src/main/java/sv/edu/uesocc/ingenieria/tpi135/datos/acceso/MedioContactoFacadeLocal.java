@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.MedioContacto;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.MedioContacto;
  * @author jonahdz
  */
 @Local
-public interface MedioContactoFacadeLocal {
-
-    void create(MedioContacto medioContacto);
-
-    void edit(MedioContacto medioContacto);
-
-    void remove(MedioContacto medioContacto);
-
-    MedioContacto find(Object id);
-
-    List<MedioContacto> findAll();
-
-    List<MedioContacto> findRange(int[] range);
-
-    int count();
+public interface MedioContactoFacadeLocal extends AbstractInterface<MedioContacto>{
     
 }

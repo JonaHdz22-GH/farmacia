@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Proveedor;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Proveedor;
  * @author jonahdz
  */
 @Local
-public interface ProveedorFacadeLocal {
-
-    void create(Proveedor proveedor);
-
-    void edit(Proveedor proveedor);
-
-    void remove(Proveedor proveedor);
-
-    Proveedor find(Object id);
-
-    List<Proveedor> findAll();
-
-    List<Proveedor> findRange(int[] range);
-
-    int count();
+public interface ProveedorFacadeLocal extends AbstractInterface<Proveedor>{
     
 }

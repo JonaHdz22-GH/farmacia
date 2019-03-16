@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.TipoPresentacion;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.TipoPresentacion;
  * @author jonahdz
  */
 @Local
-public interface TipoPresentacionFacadeLocal {
-
-    void create(TipoPresentacion tipoPresentacion);
-
-    void edit(TipoPresentacion tipoPresentacion);
-
-    void remove(TipoPresentacion tipoPresentacion);
-
-    TipoPresentacion find(Object id);
-
-    List<TipoPresentacion> findAll();
-
-    List<TipoPresentacion> findRange(int[] range);
-
-    int count();
+public interface TipoPresentacionFacadeLocal extends AbstractInterface<TipoPresentacion>{
     
 }

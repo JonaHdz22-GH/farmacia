@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
-import java.util.List;
 import javax.ejb.Local;
 import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Pago;
 
@@ -14,20 +13,6 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Pago;
  * @author jonahdz
  */
 @Local
-public interface PagoFacadeLocal {
-
-    void create(Pago pago);
-
-    void edit(Pago pago);
-
-    void remove(Pago pago);
-
-    Pago find(Object id);
-
-    List<Pago> findAll();
-
-    List<Pago> findRange(int[] range);
-
-    int count();
+public interface PagoFacadeLocal extends AbstractInterface<Pago>{
     
 }

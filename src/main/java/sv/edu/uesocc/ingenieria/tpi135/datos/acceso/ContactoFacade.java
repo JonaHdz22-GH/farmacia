@@ -5,6 +5,8 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
 
+import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +16,7 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Contacto;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class ContactoFacade extends AbstractFacade<Contacto> implements ContactoFacadeLocal {
 
@@ -28,5 +31,5 @@ public class ContactoFacade extends AbstractFacade<Contacto> implements Contacto
     public ContactoFacade() {
         super(Contacto.class);
     }
-    
+  
 }
