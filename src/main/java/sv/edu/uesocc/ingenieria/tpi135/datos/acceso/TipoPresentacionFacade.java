@@ -25,7 +25,6 @@ public class TipoPresentacionFacade extends AbstractFacade<TipoPresentacion> imp
     @Override
     protected EntityManager getEntityManager() {
         return em;
-        
     }
 
     public TipoPresentacionFacade() {
