@@ -25,6 +25,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @Override
     protected EntityManager getEntityManager() {
         return em;
+        
     }
 
     public UsuarioFacade() {
