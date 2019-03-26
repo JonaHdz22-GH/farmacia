@@ -2,21 +2,21 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="FarmaciaPU" transaction-type="JTA">
     <jta-data-source>jdbc/farmacia</jta-data-source>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Contacto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Descuento</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleProducto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleVenta</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Factura</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.FormaPago</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.MedioContacto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Pago</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.PresentacionProducto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Producto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Proveedor</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.ProveedorProducto</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.TipoDescuento</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.TipoPresentacion</class>
-    <class>sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Usuario</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.MedioContacto</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Factura</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.FormaPago</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Contacto</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleVenta</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.ProveedorProducto</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Proveedor</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.TipoPresentacion</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.PresentacionProducto</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleProducto</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.TipoDescuento</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Pago</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Usuario</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Descuento</class>
+    <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Producto</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

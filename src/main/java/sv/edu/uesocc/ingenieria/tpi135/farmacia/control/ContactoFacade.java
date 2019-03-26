@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
+package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleProducto;
+import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Contacto;
 
 /**
  *
@@ -17,7 +18,7 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleProducto;
  */
 @LocalBean
 @Stateless
-public class DetalleProductoFacade extends AbstractFacade<DetalleProducto> implements DetalleProductoFacadeLocal {
+public class ContactoFacade extends AbstractFacade<Contacto>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
     private EntityManager em;
@@ -27,8 +28,8 @@ public class DetalleProductoFacade extends AbstractFacade<DetalleProducto> imple
         return em;
     }
 
-    public DetalleProductoFacade() {
-        super(DetalleProducto.class);
+    public ContactoFacade() {
+        super(Contacto.class);
     }
-    
+  
 }

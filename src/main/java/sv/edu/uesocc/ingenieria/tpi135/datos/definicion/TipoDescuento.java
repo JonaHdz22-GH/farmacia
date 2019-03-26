@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.edu.uesocc.ingenieria.tpi135.datos.definicion;
+package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
 import java.util.List;

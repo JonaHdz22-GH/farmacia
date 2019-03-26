@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
+package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.MedioContacto;
+import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Pago;
 
 /**
  *
@@ -17,7 +17,7 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.MedioContacto;
  */
 @LocalBean
 @Stateless
-public class MedioContactoFacade extends AbstractFacade<MedioContacto> implements MedioContactoFacadeLocal {
+public class PagoFacade extends AbstractFacade<Pago>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
     private EntityManager em;
@@ -27,8 +27,8 @@ public class MedioContactoFacade extends AbstractFacade<MedioContacto> implement
         return em;
     }
 
-    public MedioContactoFacade() {
-        super(MedioContacto.class);
+    public PagoFacade() {
+        super(Pago.class);
     }
     
 }

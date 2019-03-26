@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.edu.uesocc.ingenieria.tpi135.datos.acceso;
+package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Factura;
+import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Usuario;
 
 /**
  *
@@ -17,7 +17,7 @@ import sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Factura;
  */
 @LocalBean
 @Stateless
-public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFacadeLocal {
+public class UsuarioFacade extends AbstractFacade<Usuario>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
     private EntityManager em;
@@ -27,8 +27,8 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         return em;
     }
 
-    public FacturaFacade() {
-        super(Factura.class);
+    public UsuarioFacade() {
+        super(Usuario.class);
     }
     
 }
