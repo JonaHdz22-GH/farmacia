@@ -5,22 +5,26 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
-
 
 /**
  *
  * @author luis21
+ * @param <T>
  */
-public abstract class AbstractInterface<T> {
+public interface AbstractInterface<T> {
     
+    public void create(T entity);
     
+    public void edit(T entity);
     
+    public void remove(T entity);
+    
+    public T findById(Object id);
+    
+    public List<T> findAll();
+    
+    public List<T> findRange(int inicio, int tamanio);
+    
+    public int count();
 }

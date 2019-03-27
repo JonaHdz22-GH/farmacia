@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -37,8 +39,8 @@ public class FormaPago implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_forma_pago", nullable = false)
     private Integer idFormaPago;
     @Basic(optional = false)
@@ -120,7 +122,7 @@ public class FormaPago implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.FormaPago[ idFormaPago=" + idFormaPago + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.FormaPago[ idFormaPago=" + idFormaPago + " ]";
     }
     
 }

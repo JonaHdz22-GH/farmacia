@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Usuario</title>
+        <icon src=""></icon>
+    </h:head>
+    <h:body>
+        
+        <h2>Entidad Usuario</h2>
+        <h:form>
+            <p:dataTable paginator="true"
+                         rows="5"
+                         value="#"
+                         var="usr">
+
+                    <h:column>
+                        <f:facet name="header">Id:</f:facet>
+                        <h:outputText style="" value="#{usr.id}" ></h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Nombre:</f:facet>
+                        <h:outputText style="" value="#{usr.nombre}" ></h:outputText>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Apellido:</f:facet>
+                        <h:outputText style="" value="#{usr.apellido}"></h:outputText>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Estado:</f:facet>
+                        <h:outputText style="" value="#{usr.activo}" ></h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Observaciones:</f:facet>
+                        <h:outputText style="" value="#{usr.observaciones}" ></h:outputText>
+                    </h:column>
+                    
+                </p:dataTable>
+        </h:form>
+
+        <h:form>
+            <h3><h:outputText value="Crear un Nuevo Registro"/></h3>
+
+            <h:panelGrid columns="2">
+                
+                <h:outputLabel value="Id" for="txtId" />
+                <h:inputText id="txtId" value="#{TipoEstadoVehiculoManagedBean.tipoEstadoVehiculo.idTipoEstadoVehiculo}"/>
+                
+                <h:outputLabel value="Nombre" for="txtNombre" />
+                <h:inputText  id="txtNombre" value="#{TipoEstadoVehiculoManagedBean.tipoEstadoVehiculo.nombre}" />
+                
+                <h:outputLabel value="Apellido" for="txtApellido" />
+                <h:inputText  id="txtApellido" value="#{TipoEstadoVehiculoManagedBean.tipoEstadoVehiculo.nombre}" />
+                
+                <h:outputLabel value="Activo" for="txtActivo" />
+                <h:selectBooleanCheckbox  id="activo" value="#{TipoEstadoVehiculoManagedBean.tipoEstadoVehiculo.activo}"/>
+
+                <h:outputLabel value="Observaciones" for="txtObservaciones"/>
+                <h:inputText id="txtObservaciones" value="#{TipoEstadoVehiculoManagedBean.tipoEstadoVehiculo.observaciones}" />
+                
+            </h:panelGrid>
+            <h:commandButton action="#{TipoEstadoVehiculoManagedBean.crearTipoEstadoVehiculo()}" value="Agregar"/>
+
+        </h:form>
+        
+    </h:body>
+</html>

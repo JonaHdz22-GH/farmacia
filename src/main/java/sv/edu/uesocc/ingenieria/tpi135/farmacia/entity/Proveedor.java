@@ -190,7 +190,7 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Proveedor[ idProveedor=" + idProveedor + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Proveedor[ idProveedor=" + idProveedor + " ]";
     }
     
 }

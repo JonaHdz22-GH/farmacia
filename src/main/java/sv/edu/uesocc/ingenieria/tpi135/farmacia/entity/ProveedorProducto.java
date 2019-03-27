@@ -143,7 +143,7 @@ public class ProveedorProducto implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.ProveedorProducto[ idProveedorProducto=" + idProveedorProducto + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.ProveedorProducto[ idProveedorProducto=" + idProveedorProducto + " ]";
     }
     
 }

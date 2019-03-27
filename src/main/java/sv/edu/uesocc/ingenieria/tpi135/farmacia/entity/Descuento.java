@@ -114,7 +114,7 @@ public class Descuento implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Descuento[ idDescuento=" + idDescuento + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Descuento[ idDescuento=" + idDescuento + " ]";
     }
     
 }

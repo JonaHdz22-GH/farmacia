@@ -29,42 +29,42 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author jonahdz
  */
 @Entity
-@Table(name = "contacto", catalog = "farmacia", schema = "")
+@Table(name = "pago", catalog = "farmacia", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contacto.findAll", query = "SELECT c FROM Contacto c")
-    , @NamedQuery(name = "Contacto.findByIdContacto", query = "SELECT c FROM Contacto c WHERE c.idContacto = :idContacto")
-    , @NamedQuery(name = "Contacto.findByDescripcion", query = "SELECT c FROM Contacto c WHERE c.descripcion = :descripcion")})
-public class Contacto implements Serializable {
+    @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
+    , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
+    , @NamedQuery(name = "Pago.findByDescripcion", query = "SELECT p FROM Pago p WHERE p.descripcion = :descripcion")})
+public class Pago implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_contacto", nullable = false)
-    private Integer idContacto;
+    @Column(name = "id_pago", nullable = false)
+    private Integer idPago;
     @Size(max = 255)
     @Column(name = "descripcion", length = 255)
     private String descripcion;
-    @JoinColumn(name = "id_medio_contacto", referencedColumnName = "id_medio_contacto", nullable = false)
+    @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago", nullable = false)
     @ManyToOne(optional = false)
-    private MedioContacto idMedioContacto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
-    private List<Proveedor> proveedorList;
+    private FormaPago idFormaPago;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPago")
+    private List<Factura> facturaList;
 
-    public Contacto() {
+    public Pago() {
     }
 
-    public Contacto(Integer idContacto) {
-        this.idContacto = idContacto;
+    public Pago(Integer idPago) {
+        this.idPago = idPago;
     }
 
-    public Integer getIdContacto() {
-        return idContacto;
+    public Integer getIdPago() {
+        return idPago;
     }
 
-    public void setIdContacto(Integer idContacto) {
-        this.idContacto = idContacto;
+    public void setIdPago(Integer idPago) {
+        this.idPago = idPago;
     }
 
     public String getDescripcion() {
@@ -75,38 +75,38 @@ public class Contacto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public MedioContacto getIdMedioContacto() {
-        return idMedioContacto;
+    public FormaPago getIdFormaPago() {
+        return idFormaPago;
     }
 
-    public void setIdMedioContacto(MedioContacto idMedioContacto) {
-        this.idMedioContacto = idMedioContacto;
+    public void setIdFormaPago(FormaPago idFormaPago) {
+        this.idFormaPago = idFormaPago;
     }
 
     @XmlTransient
-    public List<Proveedor> getProveedorList() {
-        return proveedorList;
+    public List<Factura> getFacturaList() {
+        return facturaList;
     }
 
-    public void setProveedorList(List<Proveedor> proveedorList) {
-        this.proveedorList = proveedorList;
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idContacto != null ? idContacto.hashCode() : 0);
+        hash += (idPago != null ? idPago.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contacto)) {
+        if (!(object instanceof Pago)) {
             return false;
         }
-        Contacto other = (Contacto) object;
-        if ((this.idContacto == null && other.idContacto != null) || (this.idContacto != null && !this.idContacto.equals(other.idContacto))) {
+        Pago other = (Pago) object;
+        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
             return false;
         }
         return true;
@@ -114,7 +114,7 @@ public class Contacto implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.Contacto[ idContacto=" + idContacto + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Pago[ idPago=" + idPago + " ]";
     }
     
 }

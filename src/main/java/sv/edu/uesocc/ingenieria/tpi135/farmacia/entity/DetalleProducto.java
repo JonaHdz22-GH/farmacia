@@ -198,7 +198,7 @@ public class DetalleProducto implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.DetalleProducto[ idDetalleProducto=" + idDetalleProducto + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleProducto[ idDetalleProducto=" + idDetalleProducto + " ]";
     }
     
 }

@@ -121,7 +121,7 @@ public class TipoPresentacion implements Serializable {
 
     @Override
     public String toString() {
-        return "sv.edu.uesocc.ingenieria.tpi135.datos.definicion.TipoPresentacion[ idTipoPresentacion=" + idTipoPresentacion + " ]";
+        return "sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.TipoPresentacion[ idTipoPresentacion=" + idTipoPresentacion + " ]";
     }
     
 }

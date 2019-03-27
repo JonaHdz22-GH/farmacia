@@ -1,6 +1,8 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 /**
@@ -17,36 +19,50 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public boolean create(T entity) {
+    public void create(T entity){
         try {
-            getEntityManager().persist(entity);
-            return true;
+            EntityManager em = getEntityManager();
+            if( em != null){
+                em.persist(entity);
+            }else{
+                System.out.println("ENTIDAD NO EXISTE");
+            }
         } catch (Exception e) {
-            return false;
-        }   
-    }
-
-    public boolean edit(T entity) {
-        try {
-            getEntityManager().merge(entity);
-            return true;
-        } catch (Exception e) {
-            return false;
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            System.out.println(e);
         }
     }
 
-    public boolean remove(T entity) {
+    public void edit(T entity) {
         try {
-            getEntityManager().remove(getEntityManager().merge(entity));
-            return true;
+            EntityManager em = getEntityManager();
+            if (em != null) {
+                em.merge(entity);
+            } else {
+                System.out.println("ENTIDAD NO EXISTE");
+            }
         } catch (Exception e) {
-            return false;
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            System.out.println(e);
+        }
+    }
+
+    public void remove(T entity) {
+         try {
+             EntityManager em = getEntityManager();
+            if (em == null) {
+                throw new IllegalStateException("ENTIDAD VACIA, ERROR ENTITY MANAGER");
+            } else {
+                em.remove(em.merge(entity));
+            }
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
     public T findById(Object id) {
+        EntityManager em = getEntityManager();
         if (id != null) {
-            EntityManager em = getEntityManager();
             if (em != null) {
                 return (T) em.find(entityClass, id);
             }
