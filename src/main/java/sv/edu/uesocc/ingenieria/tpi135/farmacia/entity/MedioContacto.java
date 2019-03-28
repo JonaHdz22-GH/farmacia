@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MedioContacto.findAll", query = "SELECT m FROM MedioContacto m")
     , @NamedQuery(name = "MedioContacto.findByIdMedioContacto", query = "SELECT m FROM MedioContacto m WHERE m.idMedioContacto = :idMedioContacto")
     , @NamedQuery(name = "MedioContacto.findByMedioContacto", query = "SELECT m FROM MedioContacto m WHERE m.medioContacto = :medioContacto")
-    , @NamedQuery(name = "MedioContacto.findByDescripcion", query = "SELECT m FROM MedioContacto m WHERE m.descripcion = :descripcion")})
+    , @NamedQuery(name = "MedioContacto.findByDescripcion", query = "SELECT m FROM MedioContacto m WHERE m.descripcion = :descripcion")
+    , @NamedQuery(name = "MedioContacto.count", query ="SELECT COUNT(m) FROM MedioContacto m")})
 public class MedioContacto implements Serializable {
 
     private static final long serialVersionUID = 1L;
