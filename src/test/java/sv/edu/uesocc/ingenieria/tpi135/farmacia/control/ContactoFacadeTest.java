@@ -57,45 +57,4 @@ public class ContactoFacadeTest {
         Assert.assertEquals(expResult,cf.contactoPorProveedor(1));
     }
     
-    @Test
-    public void testCreate() {
-        System.out.println("testCreate");
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-        cf.em = entityManager;
-        cf.create(new Contacto());
-        Mockito.verify(entityManager).persist(Matchers.anyObject());
-    }
-   
-    @Test
-    public void testEdit() {
-        System.out.println("testEdit");
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Contacto mcm = new Contacto(1,"Contacto 1");
-        cf.em = entityManager;
-        cf.edit(mcm);
-        Mockito.verify(entityManager).merge(Matchers.any(Contacto.class));
-    }
-    
-    @Test
-    public void testRemove() {
-        System.out.println("testRemove");
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Contacto mcm = new Contacto(1);
-        cf.em = entityManager;
-        cf.remove(mcm);
-        Mockito.verify(entityManager).remove(Matchers.any(Contacto.class));
-    }
-    
-    @Test
-    public void testFindById() {
-        System.out.println("testFindById");
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Mockito.when(entityManager.find(Contacto.class,1)).thenReturn(new Contacto(1));
-        Contacto expResult = new Contacto(1);
-        cf.em = entityManager;
-        Object id=1;
-        Contacto result = cf.findById(id);
-        Assert.assertEquals(expResult,result);
-    }
-    
 }

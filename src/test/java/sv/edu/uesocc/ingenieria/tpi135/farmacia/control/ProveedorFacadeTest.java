@@ -43,5 +43,20 @@ public class ProveedorFacadeTest {
         Assert.assertEquals(exp,pf.proveedorPorContacto(1));
     }
     
+    @Test
+    public void testProveedorPorProducto(){
+        System.out.println("testProveedorPorProducto");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        Query query = Mockito.mock(Query.class);
+        pf.em = entityManager;
+        List<Proveedor> exp = new ArrayList<>();
+        List<Proveedor> salida = new ArrayList<>();
+        exp.add(new Proveedor(1));
+        salida.add(new Proveedor(1));
+        Mockito.when(entityManager.createQuery("SELECT p FROM Proveedor p JOIN p.proveedorProductoList pp JOIN pp.productoList prp WHERE prp.idProducto = 1 ORDER BY pp.precioCompra ASC"))
+               .thenReturn(query);
+        Mockito.when(query.getResultList()).thenReturn(salida);
+        Assert.assertEquals(exp,pf.proveedorPorProducto(1));
+    }
     
 }

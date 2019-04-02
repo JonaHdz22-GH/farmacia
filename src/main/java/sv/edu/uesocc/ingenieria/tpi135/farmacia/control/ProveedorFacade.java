@@ -34,11 +34,26 @@ public class ProveedorFacade extends AbstractFacade<Proveedor>{
     }
     
     
-    public List<Proveedor> proveedorPorContacto(Integer id){
+    public List<Proveedor> proveedorPorContacto(Integer idContacto){
         List<Proveedor> lista = new ArrayList<>();
         try{
-            if( em!=null && id != null && id>0){
-                Query query = em.createQuery("SELECT p FROM Proveedor p JOIN p.medioContactoList mc WHERE mc.idContacto.idContacto = "+id);
+            if( em!=null && idContacto != null && idContacto>0){
+                Query query = em.createQuery("SELECT p FROM Proveedor p JOIN p.medioContactoList mc WHERE mc.idContacto.idContacto = "+idContacto);
+                lista = query.getResultList();
+                return lista;
+            }else{
+                return Collections.EMPTY_LIST;
+            }
+        }catch(Exception e){
+            return Collections.EMPTY_LIST;
+        }
+    }
+    
+    public List<Proveedor> proveedorPorProducto(Integer idProducto){
+        List<Proveedor> lista = new ArrayList<>();
+        try{
+            if(em!= null && idProducto!=null && idProducto>0){
+                Query query = em.createQuery("SELECT p FROM Proveedor p JOIN p.proveedorProductoList pp JOIN pp.productoList prp WHERE prp.idProducto = "+idProducto+" ORDER BY pp.precioCompra ASC");
                 lista = query.getResultList();
                 return lista;
             }else{

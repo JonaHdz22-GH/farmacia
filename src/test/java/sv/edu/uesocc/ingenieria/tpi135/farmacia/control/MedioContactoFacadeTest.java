@@ -16,13 +16,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Contacto;
 import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.MedioContacto;
 
 /**
  *
- * @author luis21
+ * @author jonahdz
  */
 @RunWith(MockitoJUnitRunner.class)
 public class MedioContactoFacadeTest {
@@ -30,7 +32,46 @@ public class MedioContactoFacadeTest {
     @EJB
     MedioContactoFacade mcf = new MedioContactoFacade();
     
+    @Test
+    public void testCreate() {
+        System.out.println("testCreate");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        mcf.em = entityManager;
+        mcf.create(new MedioContacto());
+        Mockito.verify(entityManager).persist(Matchers.anyObject());
+    }
+   
+    @Test
+    public void testEdit() {
+        System.out.println("testEdit");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        MedioContacto mcm = new MedioContacto(1);
+        mcf.em = entityManager;
+        mcf.edit(mcm);
+        Mockito.verify(entityManager).merge(Matchers.any(Contacto.class));
+    }
     
+    @Test
+    public void testRemove() {
+        System.out.println("testRemove");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        MedioContacto mcm = new MedioContacto(1);
+        mcf.em = entityManager;
+        mcf.remove(mcm);
+        Mockito.verify(entityManager).remove(Matchers.any(Contacto.class));
+    }
+    
+    @Test
+    public void testFindById() {
+        System.out.println("testFindById");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        Mockito.when(entityManager.find(MedioContacto.class,1)).thenReturn(new MedioContacto(1));
+        MedioContacto expResult = new MedioContacto(1);
+        mcf.em = entityManager;
+        Object id=1;
+        MedioContacto result = mcf.findById(id);
+        Assert.assertEquals(expResult,result);
+    }
     @Test
     public void testFindAll(){
         System.out.println("testFindAll");
