@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoPresentacion.findAll", query = "SELECT t FROM TipoPresentacion t")
     , @NamedQuery(name = "TipoPresentacion.findByIdTipoPresentacion", query = "SELECT t FROM TipoPresentacion t WHERE t.idTipoPresentacion = :idTipoPresentacion")
     , @NamedQuery(name = "TipoPresentacion.findByNombre", query = "SELECT t FROM TipoPresentacion t WHERE t.nombre = :nombre")
-    , @NamedQuery(name = "TipoPresentacion.findByDescripcion", query = "SELECT t FROM TipoPresentacion t WHERE t.descripcion = :descripcion")})
+    , @NamedQuery(name = "TipoPresentacion.findByEstado", query = "SELECT t FROM TipoPresentacion t WHERE t.estado = :estado")})
 public class TipoPresentacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,8 +49,11 @@ public class TipoPresentacion implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
+    @Column(name = "estado")
+    private Boolean estado;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPresentacion")
     private List<PresentacionProducto> presentacionProductoList;
@@ -80,6 +84,14 @@ public class TipoPresentacion implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public String getDescripcion() {

@@ -1,8 +1,6 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 /**
@@ -26,10 +24,10 @@ public abstract class AbstractFacade<T> {
             if (em != null) {
                 em.persist(entity);
             } else {
-                throw new IllegalStateException("El entity manager es nulo");
+                throw new IllegalStateException("em null");
             }
         } else {
-            throw new IllegalArgumentException("Entity nula");
+            throw new IllegalArgumentException("entity null");
         }
 
     }
@@ -40,23 +38,23 @@ public abstract class AbstractFacade<T> {
             if (em != null) {
                 em.merge(entity);
             } else {
-                throw new IllegalStateException("El entity manager es nulo");
+                throw new IllegalStateException("em null");
             }
         } else {
-            throw new IllegalArgumentException("Entity nula");
+            throw new IllegalArgumentException("entity null");
         }
     }
 
     public void remove(T entity) {
-        try {
+        if(entity != null){
             EntityManager em = getEntityManager();
-            if (em == null) {
-                throw new IllegalStateException("ENTIDAD VACIA, ERROR ENTITY MANAGER");
+            if (em != null) {
+                em.remove(em.merge(entity));   
             } else {
-                em.remove(em.merge(entity));
+                throw new IllegalStateException("em null");
             }
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }else{
+            throw new IllegalArgumentException("entity null");
         }
     }
 
@@ -66,16 +64,15 @@ public abstract class AbstractFacade<T> {
             if (em != null) {
                 return (T) em.find(entityClass,id);
             }
-            throw new IllegalStateException("El entity manager es nulo");
+            throw new IllegalStateException("em null");
         }
-        throw new IllegalArgumentException("La id es nulo" + id);
+        throw new IllegalArgumentException("id null");
     }
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
-        
     }
 
     public List<T> findRange(int inicio, int tamanio) {

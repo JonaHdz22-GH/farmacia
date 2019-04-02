@@ -14,12 +14,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Contacto.findAll", query = "SELECT c FROM Contacto c")
     , @NamedQuery(name = "Contacto.findByIdContacto", query = "SELECT c FROM Contacto c WHERE c.idContacto = :idContacto")
-    , @NamedQuery(name = "Contacto.findByDescripcion", query = "SELECT c FROM Contacto c WHERE c.descripcion = :descripcion")})
+    , @NamedQuery(name = "Contacto.findByContacto", query = "SELECT c FROM Contacto c WHERE c.contacto = :contacto")
+    , @NamedQuery(name = "Contacto.findByEstado", query = "SELECT c FROM Contacto c WHERE c.estado = :estado")})
 public class Contacto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,20 +44,30 @@ public class Contacto implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_contacto", nullable = false)
     private Integer idContacto;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "contacto", nullable = false, length = 45)
+    private String contacto;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
-    @JoinColumn(name = "id_medio_contacto", referencedColumnName = "id_medio_contacto", nullable = false)
-    @ManyToOne(optional = false)
-    private MedioContacto idMedioContacto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
-    private List<Proveedor> proveedorList;
+    private List<MedioContacto> medioContactoList;
 
     public Contacto() {
     }
 
     public Contacto(Integer idContacto) {
         this.idContacto = idContacto;
+    }
+
+    public Contacto(Integer idContacto, String contacto) {
+        this.idContacto = idContacto;
+        this.contacto = contacto;
     }
 
     public Integer getIdContacto() {
@@ -67,6 +78,22 @@ public class Contacto implements Serializable {
         this.idContacto = idContacto;
     }
 
+    public String getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -75,21 +102,13 @@ public class Contacto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public MedioContacto getIdMedioContacto() {
-        return idMedioContacto;
-    }
-
-    public void setIdMedioContacto(MedioContacto idMedioContacto) {
-        this.idMedioContacto = idMedioContacto;
-    }
-
     @XmlTransient
-    public List<Proveedor> getProveedorList() {
-        return proveedorList;
+    public List<MedioContacto> getMedioContactoList() {
+        return medioContactoList;
     }
 
-    public void setProveedorList(List<Proveedor> proveedorList) {
-        this.proveedorList = proveedorList;
+    public void setMedioContactoList(List<MedioContacto> medioContactoList) {
+        this.medioContactoList = medioContactoList;
     }
 
     @Override

@@ -14,8 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,12 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Proveedor.findAll", query = "SELECT p FROM Proveedor p")
     , @NamedQuery(name = "Proveedor.findByIdProveedor", query = "SELECT p FROM Proveedor p WHERE p.idProveedor = :idProveedor")
-    , @NamedQuery(name = "Proveedor.findByNombreEmpresa", query = "SELECT p FROM Proveedor p WHERE p.nombreEmpresa = :nombreEmpresa")
     , @NamedQuery(name = "Proveedor.findByNombreProveedor", query = "SELECT p FROM Proveedor p WHERE p.nombreProveedor = :nombreProveedor")
+    , @NamedQuery(name = "Proveedor.findByNombreEmpresa", query = "SELECT p FROM Proveedor p WHERE p.nombreEmpresa = :nombreEmpresa")
     , @NamedQuery(name = "Proveedor.findByDireccionEmpresa", query = "SELECT p FROM Proveedor p WHERE p.direccionEmpresa = :direccionEmpresa")
-    , @NamedQuery(name = "Proveedor.findByTipoEmpresa", query = "SELECT p FROM Proveedor p WHERE p.tipoEmpresa = :tipoEmpresa")
-    , @NamedQuery(name = "Proveedor.findByEstado", query = "SELECT p FROM Proveedor p WHERE p.estado = :estado")
-    , @NamedQuery(name = "Proveedor.findByObservaciones", query = "SELECT p FROM Proveedor p WHERE p.observaciones = :observaciones")})
+    , @NamedQuery(name = "Proveedor.findByEstado", query = "SELECT p FROM Proveedor p WHERE p.estado = :estado")})
 public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,31 +49,26 @@ public class Proveedor implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombre_empresa", nullable = false, length = 45)
-    private String nombreEmpresa;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "nombre_proveedor", nullable = false, length = 45)
     private String nombreProveedor;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "direccion_empresa", nullable = false, length = 45)
-    private String direccionEmpresa;
+    @Column(name = "nombre_empresa", nullable = false, length = 45)
+    private String nombreEmpresa;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "tipo_empresa", nullable = false, length = 45)
-    private String tipoEmpresa;
+    @Column(name = "direccion_empresa", nullable = false, length = 45)
+    private String direccionEmpresa;
     @Column(name = "estado")
     private Boolean estado;
-    @Size(max = 255)
-    @Column(name = "observaciones", length = 255)
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "observaciones", length = 65535)
     private String observaciones;
-    @JoinColumn(name = "id_contacto", referencedColumnName = "id_contacto", nullable = false)
-    @ManyToOne(optional = false)
-    private Contacto idContacto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
+    private List<MedioContacto> medioContactoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedor")
     private List<ProveedorProducto> proveedorProductoList;
 
@@ -87,12 +79,11 @@ public class Proveedor implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public Proveedor(Integer idProveedor, String nombreEmpresa, String nombreProveedor, String direccionEmpresa, String tipoEmpresa) {
+    public Proveedor(Integer idProveedor, String nombreProveedor, String nombreEmpresa, String direccionEmpresa) {
         this.idProveedor = idProveedor;
-        this.nombreEmpresa = nombreEmpresa;
         this.nombreProveedor = nombreProveedor;
+        this.nombreEmpresa = nombreEmpresa;
         this.direccionEmpresa = direccionEmpresa;
-        this.tipoEmpresa = tipoEmpresa;
     }
 
     public Integer getIdProveedor() {
@@ -103,14 +94,6 @@ public class Proveedor implements Serializable {
         this.idProveedor = idProveedor;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
-    }
-
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
-
     public String getNombreProveedor() {
         return nombreProveedor;
     }
@@ -119,20 +102,20 @@ public class Proveedor implements Serializable {
         this.nombreProveedor = nombreProveedor;
     }
 
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+
     public String getDireccionEmpresa() {
         return direccionEmpresa;
     }
 
     public void setDireccionEmpresa(String direccionEmpresa) {
         this.direccionEmpresa = direccionEmpresa;
-    }
-
-    public String getTipoEmpresa() {
-        return tipoEmpresa;
-    }
-
-    public void setTipoEmpresa(String tipoEmpresa) {
-        this.tipoEmpresa = tipoEmpresa;
     }
 
     public Boolean getEstado() {
@@ -151,12 +134,13 @@ public class Proveedor implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Contacto getIdContacto() {
-        return idContacto;
+    @XmlTransient
+    public List<MedioContacto> getMedioContactoList() {
+        return medioContactoList;
     }
 
-    public void setIdContacto(Contacto idContacto) {
-        this.idContacto = idContacto;
+    public void setMedioContactoList(List<MedioContacto> medioContactoList) {
+        this.medioContactoList = medioContactoList;
     }
 
     @XmlTransient

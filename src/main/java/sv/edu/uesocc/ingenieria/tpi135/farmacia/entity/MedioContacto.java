@@ -6,22 +6,18 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,10 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MedioContacto.findAll", query = "SELECT m FROM MedioContacto m")
-    , @NamedQuery(name = "MedioContacto.findByIdMedioContacto", query = "SELECT m FROM MedioContacto m WHERE m.idMedioContacto = :idMedioContacto")
-    , @NamedQuery(name = "MedioContacto.findByMedioContacto", query = "SELECT m FROM MedioContacto m WHERE m.medioContacto = :medioContacto")
-    , @NamedQuery(name = "MedioContacto.findByDescripcion", query = "SELECT m FROM MedioContacto m WHERE m.descripcion = :descripcion")
-    , @NamedQuery(name = "MedioContacto.count", query ="SELECT COUNT(m) FROM MedioContacto m")})
+    , @NamedQuery(name = "MedioContacto.findByIdMedioContacto", query = "SELECT m FROM MedioContacto m WHERE m.idMedioContacto = :idMedioContacto")})
 public class MedioContacto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,27 +37,18 @@ public class MedioContacto implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_medio_contacto", nullable = false)
     private Integer idMedioContacto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "medio_contacto", nullable = false, length = 45)
-    private String medioContacto;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMedioContacto")
-    private List<Contacto> contactoList;
+    @JoinColumn(name = "id_contacto", referencedColumnName = "id_contacto", nullable = false)
+    @ManyToOne(optional = false)
+    private Contacto idContacto;
+    @JoinColumn(name = "id_proveedor", referencedColumnName = "id_proveedor", nullable = false)
+    @ManyToOne(optional = false)
+    private Proveedor idProveedor;
 
     public MedioContacto() {
     }
 
     public MedioContacto(Integer idMedioContacto) {
         this.idMedioContacto = idMedioContacto;
-    }
-
-    public MedioContacto(Integer idMedioContacto, String medioContacto) {
-        this.idMedioContacto = idMedioContacto;
-        this.medioContacto = medioContacto;
     }
 
     public Integer getIdMedioContacto() {
@@ -75,29 +59,20 @@ public class MedioContacto implements Serializable {
         this.idMedioContacto = idMedioContacto;
     }
 
-    public String getMedioContacto() {
-        return medioContacto;
+    public Contacto getIdContacto() {
+        return idContacto;
     }
 
-    public void setMedioContacto(String medioContacto) {
-        this.medioContacto = medioContacto;
+    public void setIdContacto(Contacto idContacto) {
+        this.idContacto = idContacto;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Proveedor getIdProveedor() {
+        return idProveedor;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    @XmlTransient
-    public List<Contacto> getContactoList() {
-        return contactoList;
-    }
-
-    public void setContactoList(List<Contacto> contactoList) {
-        this.contactoList = contactoList;
+    public void setIdProveedor(Proveedor idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     @Override

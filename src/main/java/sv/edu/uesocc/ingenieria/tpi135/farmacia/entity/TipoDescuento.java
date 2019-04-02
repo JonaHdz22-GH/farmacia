@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,8 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoDescuento.findAll", query = "SELECT t FROM TipoDescuento t")
     , @NamedQuery(name = "TipoDescuento.findByIdTipoDescuento", query = "SELECT t FROM TipoDescuento t WHERE t.idTipoDescuento = :idTipoDescuento")
     , @NamedQuery(name = "TipoDescuento.findByTipoDescuento", query = "SELECT t FROM TipoDescuento t WHERE t.tipoDescuento = :tipoDescuento")
-    , @NamedQuery(name = "TipoDescuento.findByDescuento", query = "SELECT t FROM TipoDescuento t WHERE t.descuento = :descuento")
-    , @NamedQuery(name = "TipoDescuento.findByDescripcion", query = "SELECT t FROM TipoDescuento t WHERE t.descripcion = :descripcion")})
+    , @NamedQuery(name = "TipoDescuento.findByDescuento", query = "SELECT t FROM TipoDescuento t WHERE t.descuento = :descuento")})
 public class TipoDescuento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +49,12 @@ public class TipoDescuento implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "tipo_descuento", nullable = false, length = 45)
     private String tipoDescuento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "descuento", nullable = false)
-    private double descuento;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "descuento", precision = 22)
+    private Double descuento;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDescuento")
     private List<Descuento> descuentoList;
@@ -66,10 +66,9 @@ public class TipoDescuento implements Serializable {
         this.idTipoDescuento = idTipoDescuento;
     }
 
-    public TipoDescuento(Integer idTipoDescuento, String tipoDescuento, double descuento) {
+    public TipoDescuento(Integer idTipoDescuento, String tipoDescuento) {
         this.idTipoDescuento = idTipoDescuento;
         this.tipoDescuento = tipoDescuento;
-        this.descuento = descuento;
     }
 
     public Integer getIdTipoDescuento() {
@@ -88,11 +87,11 @@ public class TipoDescuento implements Serializable {
         this.tipoDescuento = tipoDescuento;
     }
 
-    public double getDescuento() {
+    public Double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(double descuento) {
+    public void setDescuento(Double descuento) {
         this.descuento = descuento;
     }
 

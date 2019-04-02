@@ -20,7 +20,7 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.MedioContacto;
 public class MedioContactoFacade extends AbstractFacade<MedioContacto>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
-    public EntityManager em;
+    protected EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -30,5 +30,6 @@ public class MedioContactoFacade extends AbstractFacade<MedioContacto>{
     public MedioContactoFacade() {
         super(MedioContacto.class);
     }
+    
     
 }

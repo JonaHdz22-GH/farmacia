@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,9 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")
     , @NamedQuery(name = "Factura.findByIdFactura", query = "SELECT f FROM Factura f WHERE f.idFactura = :idFactura")
-    , @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha")
-    , @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total")
-    , @NamedQuery(name = "Factura.findByObservaciones", query = "SELECT f FROM Factura f WHERE f.observaciones = :observaciones")})
+    , @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,12 +53,9 @@ public class Factura implements Serializable {
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "total", nullable = false)
-    private double total;
-    @Size(max = 255)
-    @Column(name = "observaciones", length = 255)
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "observaciones", length = 65535)
     private String observaciones;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFactura")
     private List<DetalleVenta> detalleVentaList;
@@ -77,10 +73,9 @@ public class Factura implements Serializable {
         this.idFactura = idFactura;
     }
 
-    public Factura(Integer idFactura, Date fecha, double total) {
+    public Factura(Integer idFactura, Date fecha) {
         this.idFactura = idFactura;
         this.fecha = fecha;
-        this.total = total;
     }
 
     public Integer getIdFactura() {
@@ -97,14 +92,6 @@ public class Factura implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public String getObservaciones() {

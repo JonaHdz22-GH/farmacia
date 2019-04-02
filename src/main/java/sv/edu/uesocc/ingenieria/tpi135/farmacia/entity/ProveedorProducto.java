@@ -6,20 +6,25 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,9 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ProveedorProducto.findAll", query = "SELECT p FROM ProveedorProducto p")
     , @NamedQuery(name = "ProveedorProducto.findByIdProveedorProducto", query = "SELECT p FROM ProveedorProducto p WHERE p.idProveedorProducto = :idProveedorProducto")
-    , @NamedQuery(name = "ProveedorProducto.findByPrecios", query = "SELECT p FROM ProveedorProducto p WHERE p.precios = :precios")
-    , @NamedQuery(name = "ProveedorProducto.findByDescuentos", query = "SELECT p FROM ProveedorProducto p WHERE p.descuentos = :descuentos")
-    , @NamedQuery(name = "ProveedorProducto.findByObservaciones", query = "SELECT p FROM ProveedorProducto p WHERE p.observaciones = :observaciones")})
+    , @NamedQuery(name = "ProveedorProducto.findByPrecioCompra", query = "SELECT p FROM ProveedorProducto p WHERE p.precioCompra = :precioCompra")
+    , @NamedQuery(name = "ProveedorProducto.findByDescuentoCompra", query = "SELECT p FROM ProveedorProducto p WHERE p.descuentoCompra = :descuentoCompra")})
 public class ProveedorProducto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,18 +48,18 @@ public class ProveedorProducto implements Serializable {
     private Integer idProveedorProducto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "precios", nullable = false)
-    private double precios;
+    @Column(name = "precio_compra", nullable = false)
+    private double precioCompra;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "descuentos", nullable = false)
-    private double descuentos;
-    @Size(max = 255)
-    @Column(name = "observaciones", length = 255)
+    @Column(name = "descuento_compra", nullable = false)
+    private double descuentoCompra;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "observaciones", length = 65535)
     private String observaciones;
-    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto", nullable = false)
-    @ManyToOne(optional = false)
-    private Producto idProducto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProveedorProducto")
+    private List<Producto> productoList;
     @JoinColumn(name = "id_proveedor", referencedColumnName = "id_proveedor", nullable = false)
     @ManyToOne(optional = false)
     private Proveedor idProveedor;
@@ -67,10 +71,10 @@ public class ProveedorProducto implements Serializable {
         this.idProveedorProducto = idProveedorProducto;
     }
 
-    public ProveedorProducto(Integer idProveedorProducto, double precios, double descuentos) {
+    public ProveedorProducto(Integer idProveedorProducto, double precioCompra, double descuentoCompra) {
         this.idProveedorProducto = idProveedorProducto;
-        this.precios = precios;
-        this.descuentos = descuentos;
+        this.precioCompra = precioCompra;
+        this.descuentoCompra = descuentoCompra;
     }
 
     public Integer getIdProveedorProducto() {
@@ -81,20 +85,20 @@ public class ProveedorProducto implements Serializable {
         this.idProveedorProducto = idProveedorProducto;
     }
 
-    public double getPrecios() {
-        return precios;
+    public double getPrecioCompra() {
+        return precioCompra;
     }
 
-    public void setPrecios(double precios) {
-        this.precios = precios;
+    public void setPrecioCompra(double precioCompra) {
+        this.precioCompra = precioCompra;
     }
 
-    public double getDescuentos() {
-        return descuentos;
+    public double getDescuentoCompra() {
+        return descuentoCompra;
     }
 
-    public void setDescuentos(double descuentos) {
-        this.descuentos = descuentos;
+    public void setDescuentoCompra(double descuentoCompra) {
+        this.descuentoCompra = descuentoCompra;
     }
 
     public String getObservaciones() {
@@ -105,12 +109,13 @@ public class ProveedorProducto implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    @XmlTransient
+    public List<Producto> getProductoList() {
+        return productoList;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setProductoList(List<Producto> productoList) {
+        this.productoList = productoList;
     }
 
     public Proveedor getIdProveedor() {

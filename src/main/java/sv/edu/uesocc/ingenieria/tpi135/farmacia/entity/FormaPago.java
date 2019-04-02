@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "FormaPago.findAll", query = "SELECT f FROM FormaPago f")
     , @NamedQuery(name = "FormaPago.findByIdFormaPago", query = "SELECT f FROM FormaPago f WHERE f.idFormaPago = :idFormaPago")
-    , @NamedQuery(name = "FormaPago.findByNombre", query = "SELECT f FROM FormaPago f WHERE f.nombre = :nombre")})
+    , @NamedQuery(name = "FormaPago.findByFormaPago", query = "SELECT f FROM FormaPago f WHERE f.formaPago = :formaPago")
+    , @NamedQuery(name = "FormaPago.findByEstado", query = "SELECT f FROM FormaPago f WHERE f.estado = :estado")})
 public class FormaPago implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,8 +47,10 @@ public class FormaPago implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombre", nullable = false, length = 45)
-    private String nombre;
+    @Column(name = "forma_pago", nullable = false, length = 45)
+    private String formaPago;
+    @Column(name = "estado")
+    private Boolean estado;
     @Lob
     @Size(max = 65535)
     @Column(name = "descripcion", length = 65535)
@@ -62,9 +65,9 @@ public class FormaPago implements Serializable {
         this.idFormaPago = idFormaPago;
     }
 
-    public FormaPago(Integer idFormaPago, String nombre) {
+    public FormaPago(Integer idFormaPago, String formaPago) {
         this.idFormaPago = idFormaPago;
-        this.nombre = nombre;
+        this.formaPago = formaPago;
     }
 
     public Integer getIdFormaPago() {
@@ -75,12 +78,20 @@ public class FormaPago implements Serializable {
         this.idFormaPago = idFormaPago;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getFormaPago() {
+        return formaPago;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public String getDescripcion() {

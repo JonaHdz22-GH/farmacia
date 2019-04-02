@@ -20,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Descuento.findAll", query = "SELECT d FROM Descuento d")
-    , @NamedQuery(name = "Descuento.findByIdDescuento", query = "SELECT d FROM Descuento d WHERE d.idDescuento = :idDescuento")
-    , @NamedQuery(name = "Descuento.findByDescripcion", query = "SELECT d FROM Descuento d WHERE d.descripcion = :descripcion")})
+    , @NamedQuery(name = "Descuento.findByIdDescuento", query = "SELECT d FROM Descuento d WHERE d.idDescuento = :idDescuento")})
 public class Descuento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,14 +41,11 @@ public class Descuento implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_descuento", nullable = false)
     private Integer idDescuento;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
     @JoinColumn(name = "id_tipo_descuento", referencedColumnName = "id_tipo_descuento", nullable = false)
     @ManyToOne(optional = false)
     private TipoDescuento idTipoDescuento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDescuento")
-    private List<Producto> productoList;
+    private List<DetalleVenta> detalleVentaList;
 
     public Descuento() {
     }
@@ -67,14 +62,6 @@ public class Descuento implements Serializable {
         this.idDescuento = idDescuento;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public TipoDescuento getIdTipoDescuento() {
         return idTipoDescuento;
     }
@@ -84,12 +71,12 @@ public class Descuento implements Serializable {
     }
 
     @XmlTransient
-    public List<Producto> getProductoList() {
-        return productoList;
+    public List<DetalleVenta> getDetalleVentaList() {
+        return detalleVentaList;
     }
 
-    public void setProductoList(List<Producto> productoList) {
-        this.productoList = productoList;
+    public void setDetalleVentaList(List<DetalleVenta> detalleVentaList) {
+        this.detalleVentaList = detalleVentaList;
     }
 
     @Override

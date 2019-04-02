@@ -20,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
-    , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
-    , @NamedQuery(name = "Pago.findByDescripcion", query = "SELECT p FROM Pago p WHERE p.descripcion = :descripcion")})
+    , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")})
 public class Pago implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,9 +41,6 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_pago", nullable = false)
     private Integer idPago;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
     @JoinColumn(name = "id_forma_pago", referencedColumnName = "id_forma_pago", nullable = false)
     @ManyToOne(optional = false)
     private FormaPago idFormaPago;
@@ -65,14 +60,6 @@ public class Pago implements Serializable {
 
     public void setIdPago(Integer idPago) {
         this.idPago = idPago;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public FormaPago getIdFormaPago() {

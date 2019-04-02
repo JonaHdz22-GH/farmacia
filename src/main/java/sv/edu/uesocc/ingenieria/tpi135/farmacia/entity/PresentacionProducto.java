@@ -6,9 +6,7 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,8 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PresentacionProducto.findAll", query = "SELECT p FROM PresentacionProducto p")
-    , @NamedQuery(name = "PresentacionProducto.findByIdPresentacion", query = "SELECT p FROM PresentacionProducto p WHERE p.idPresentacion = :idPresentacion")
-    , @NamedQuery(name = "PresentacionProducto.findByDescripcion", query = "SELECT p FROM PresentacionProducto p WHERE p.descripcion = :descripcion")})
+    , @NamedQuery(name = "PresentacionProducto.findByIdPresentacion", query = "SELECT p FROM PresentacionProducto p WHERE p.idPresentacion = :idPresentacion")})
 public class PresentacionProducto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,14 +37,12 @@ public class PresentacionProducto implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_presentacion", nullable = false)
     private Integer idPresentacion;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
+    @JoinColumn(name = "id_detalle", referencedColumnName = "id_detalle", nullable = false)
+    @ManyToOne(optional = false)
+    private Detalle idDetalle;
     @JoinColumn(name = "id_tipo_presentacion", referencedColumnName = "id_tipo_presentacion", nullable = false)
     @ManyToOne(optional = false)
     private TipoPresentacion idTipoPresentacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresentacion")
-    private List<Producto> productoList;
 
     public PresentacionProducto() {
     }
@@ -67,12 +59,12 @@ public class PresentacionProducto implements Serializable {
         this.idPresentacion = idPresentacion;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Detalle getIdDetalle() {
+        return idDetalle;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIdDetalle(Detalle idDetalle) {
+        this.idDetalle = idDetalle;
     }
 
     public TipoPresentacion getIdTipoPresentacion() {
@@ -81,15 +73,6 @@ public class PresentacionProducto implements Serializable {
 
     public void setIdTipoPresentacion(TipoPresentacion idTipoPresentacion) {
         this.idTipoPresentacion = idTipoPresentacion;
-    }
-
-    @XmlTransient
-    public List<Producto> getProductoList() {
-        return productoList;
-    }
-
-    public void setProductoList(List<Producto> productoList) {
-        this.productoList = productoList;
     }
 
     @Override

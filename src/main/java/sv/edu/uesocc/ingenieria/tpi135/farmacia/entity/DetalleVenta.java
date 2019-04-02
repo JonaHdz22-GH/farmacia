@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,10 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "DetalleVenta.findAll", query = "SELECT d FROM DetalleVenta d")
     , @NamedQuery(name = "DetalleVenta.findByIdDetalleVenta", query = "SELECT d FROM DetalleVenta d WHERE d.idDetalleVenta = :idDetalleVenta")
-    , @NamedQuery(name = "DetalleVenta.findByProductos", query = "SELECT d FROM DetalleVenta d WHERE d.productos = :productos")
     , @NamedQuery(name = "DetalleVenta.findByCantidad", query = "SELECT d FROM DetalleVenta d WHERE d.cantidad = :cantidad")
-    , @NamedQuery(name = "DetalleVenta.findByDescripcion", query = "SELECT d FROM DetalleVenta d WHERE d.descripcion = :descripcion")
-    , @NamedQuery(name = "DetalleVenta.findByObservaciones", query = "SELECT d FROM DetalleVenta d WHERE d.observaciones = :observaciones")})
+    , @NamedQuery(name = "DetalleVenta.findByValorVenta", query = "SELECT d FROM DetalleVenta d WHERE d.valorVenta = :valorVenta")})
 public class DetalleVenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,19 +44,18 @@ public class DetalleVenta implements Serializable {
     private Integer idDetalleVenta;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "productos", nullable = false, length = 255)
-    private String productos;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
-    private String descripcion;
-    @Size(max = 255)
-    @Column(name = "observaciones", length = 255)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "valor_venta", precision = 22)
+    private Double valorVenta;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "observaciones", length = 65535)
     private String observaciones;
+    @JoinColumn(name = "id_descuento", referencedColumnName = "id_descuento", nullable = false)
+    @ManyToOne(optional = false)
+    private Descuento idDescuento;
     @JoinColumn(name = "id_factura", referencedColumnName = "id_factura", nullable = false)
     @ManyToOne(optional = false)
     private Factura idFactura;
@@ -72,9 +70,8 @@ public class DetalleVenta implements Serializable {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public DetalleVenta(Integer idDetalleVenta, String productos, int cantidad) {
+    public DetalleVenta(Integer idDetalleVenta, int cantidad) {
         this.idDetalleVenta = idDetalleVenta;
-        this.productos = productos;
         this.cantidad = cantidad;
     }
 
@@ -86,14 +83,6 @@ public class DetalleVenta implements Serializable {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public String getProductos() {
-        return productos;
-    }
-
-    public void setProductos(String productos) {
-        this.productos = productos;
-    }
-
     public int getCantidad() {
         return cantidad;
     }
@@ -102,12 +91,12 @@ public class DetalleVenta implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Double getValorVenta() {
+        return valorVenta;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setValorVenta(Double valorVenta) {
+        this.valorVenta = valorVenta;
     }
 
     public String getObservaciones() {
@@ -116,6 +105,14 @@ public class DetalleVenta implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Descuento getIdDescuento() {
+        return idDescuento;
+    }
+
+    public void setIdDescuento(Descuento idDescuento) {
+        this.idDescuento = idDescuento;
     }
 
     public Factura getIdFactura() {

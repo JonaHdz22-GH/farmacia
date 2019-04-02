@@ -6,7 +6,6 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -16,13 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,11 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")
     , @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto")
-    , @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio")
-    , @NamedQuery(name = "Producto.findByFechaFabricacion", query = "SELECT p FROM Producto p WHERE p.fechaFabricacion = :fechaFabricacion")
-    , @NamedQuery(name = "Producto.findByFechaVencimiento", query = "SELECT p FROM Producto p WHERE p.fechaVencimiento = :fechaVencimiento")
-    , @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion")})
+    , @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,35 +50,19 @@ public class Producto implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "precio", nullable = false)
-    private double precio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_fabricacion", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaFabricacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_vencimiento", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date fechaVencimiento;
-    @Size(max = 255)
-    @Column(name = "descripcion", length = 255)
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "descripcion", length = 65535)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleProducto> detalleProductoList;
-    @JoinColumn(name = "id_descuento", referencedColumnName = "id_descuento", nullable = false)
+    @JoinColumn(name = "id_proveedor_producto", referencedColumnName = "id_proveedor_producto", nullable = false)
     @ManyToOne(optional = false)
-    private Descuento idDescuento;
-    @JoinColumn(name = "id_presentacion", referencedColumnName = "id_presentacion", nullable = false)
-    @ManyToOne(optional = false)
-    private PresentacionProducto idPresentacion;
+    private ProveedorProducto idProveedorProducto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
     private List<DetalleVenta> detalleVentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProducto")
-    private List<ProveedorProducto> proveedorProductoList;
+    private List<Inventario> inventarioList;
 
     public Producto() {
     }
@@ -93,12 +71,9 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public Producto(Integer idProducto, String nombre, double precio, Date fechaFabricacion, Date fechaVencimiento) {
+    public Producto(Integer idProducto, String nombre) {
         this.idProducto = idProducto;
         this.nombre = nombre;
-        this.precio = precio;
-        this.fechaFabricacion = fechaFabricacion;
-        this.fechaVencimiento = fechaVencimiento;
     }
 
     public Integer getIdProducto() {
@@ -115,30 +90,6 @@ public class Producto implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public Date getFechaFabricacion() {
-        return fechaFabricacion;
-    }
-
-    public void setFechaFabricacion(Date fechaFabricacion) {
-        this.fechaFabricacion = fechaFabricacion;
-    }
-
-    public Date getFechaVencimiento() {
-        return fechaVencimiento;
-    }
-
-    public void setFechaVencimiento(Date fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getDescripcion() {
@@ -158,20 +109,12 @@ public class Producto implements Serializable {
         this.detalleProductoList = detalleProductoList;
     }
 
-    public Descuento getIdDescuento() {
-        return idDescuento;
+    public ProveedorProducto getIdProveedorProducto() {
+        return idProveedorProducto;
     }
 
-    public void setIdDescuento(Descuento idDescuento) {
-        this.idDescuento = idDescuento;
-    }
-
-    public PresentacionProducto getIdPresentacion() {
-        return idPresentacion;
-    }
-
-    public void setIdPresentacion(PresentacionProducto idPresentacion) {
-        this.idPresentacion = idPresentacion;
+    public void setIdProveedorProducto(ProveedorProducto idProveedorProducto) {
+        this.idProveedorProducto = idProveedorProducto;
     }
 
     @XmlTransient
@@ -184,12 +127,12 @@ public class Producto implements Serializable {
     }
 
     @XmlTransient
-    public List<ProveedorProducto> getProveedorProductoList() {
-        return proveedorProductoList;
+    public List<Inventario> getInventarioList() {
+        return inventarioList;
     }
 
-    public void setProveedorProductoList(List<ProveedorProducto> proveedorProductoList) {
-        this.proveedorProductoList = proveedorProductoList;
+    public void setInventarioList(List<Inventario> inventarioList) {
+        this.inventarioList = inventarioList;
     }
 
     @Override
