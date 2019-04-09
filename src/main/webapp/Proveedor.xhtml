@@ -8,45 +8,52 @@
     <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>Usuario</title>
+            <title>Proveedor</title>
         </f:facet>
     </h:head>
 
     <h:body>
         <h:form id="tablaDatos">
             <p:dataTable id="table"
-                         value="#{frmUsuario.lazymodel}" 
+                         value="#{frmProveedor.lazymodel}" 
                          var="var"
                          lazy="true"
                          paginator="true"
                          rows="5"
                          selectionMode="single"
-                         selection="#{frmUsuario.registrousr}"
-                         disabledSelection="#{frmUsuario.seleccion}">
+                         selection="#{frmProveedor.registroprv}"
+                         disabledSelection="#{frmProveedor.seleccion}">
                 
-                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmUsuario.cambiarSeleccion()}" event="rowSelect"/>
+                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmProveedor.cambiarSeleccion()}" event="rowSelect"/>
                     
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="ID"/>
                     </f:facet>		
-                    <h:outputText value="#{var.idUsuario}"/>
+                    <h:outputText value="#{var.idProveedor}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Nombre"/>
+                        <h:outputText value="Nombre Proveedor"/>
                     </f:facet>		
-                    <h:outputText value="#{var.nombre}"/>
+                    <h:outputText value="#{var.nombreProveedor}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Apellido"/>
+                        <h:outputText value="Nombre Empresa"/>
                     </f:facet>		
-                    <h:outputText value="#{var.apellido}"/>
+                    <h:outputText value="#{var.nombreEmpresa}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Direccion Empresa"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.direccionEmpresa}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Estado"/>
+                        <h:outputText value="Activo"/>
                     </f:facet>		
                     <h:outputText value="#{var.estado}"/>
                 </p:column>
@@ -66,24 +73,28 @@
                 <p:panelGrid id="grid_input" columns="3">
 
                     <h:outputLabel for="id" value="ID"/>
-                    <p:inputText id="id" value="#{frmUsuario.registrousr.idUsuario}" label="id" readonly="false"/>
+                    <p:inputText id="id" value="#{frmProveedor.registroprv.idProveedor}" label="id" readonly="false"/>
                     <p:message id="msmid" for="id"/>
 
-                    <h:outputLabel for="name" value="Nombre"/>
-                    <p:inputText id="name" value="#{frmUsuario.registrousr.nombre}" label="name" required="true" readonly="false"/>
+                    <h:outputLabel for="name" value="Nombre Proveedor"/>
+                    <p:inputText id="name" value="#{frmProveedor.registroprv.nombreProveedor}" label="name" required="true" readonly="false"/>
                     <p:message id="msname" for="name"/>
                     
-                    <h:outputLabel for="apellido" value="Apellido"/>
-                    <p:inputText id="apellido" value="#{frmUsuario.registrousr.apellido}" label="apellido" required="true" readonly="false"/>
-                    <p:message id="msapellido" for="apellido"/>
-                     
-                    <h:outputLabel for="estado" value="Estado"/>
-                    <p:selectBooleanCheckbox id="estado" value="#{frmUsuario.registrousr.estado}" disabled="false"/>
-                    <p:message id="msestado" for="estado"/>
+                    <p:outputLabel for="nameEmp" value="Nombre Empresa"/>
+                    <p:inputText id="nameEmp" value="#{frmProveedor.registroprv.nombreEmpresa}" label="nameEmp" required="true"/>
+                    <p:message id="msnameEmp" for="nameEmp"/>
 
-                    <h:outputLabel for="observaciones" value="Observaciones"/>
-                    <p:inputTextarea id="observaciones" value="#{frmUsuario.registrousr.observaciones}" label="observaciones" readonly="false"/>
-                    <p:message id="msobservaciones" for="observaciones"/>
+                    <p:outputLabel for="direccion" value="Direccion"/>
+                    <p:inputText id="direccion" value="#{frmProveedor.registroprv.direccionEmpresa}" label="direccion" required="true"/>
+                    <p:message id="msdireccion" for="direccion"/>
+                                         
+                    <h:outputLabel for="state" value="Estado"/>
+                    <p:selectBooleanCheckbox id="state" value="#{frmProveedor.registroprv.estado}" disabled="false"/>
+                    <p:message id="msstate" for="state"/>
+
+                    <h:outputLabel for="descripcion" value="Observaciones"/>
+                    <p:inputTextarea id="descripcion" value="#{frmProveedor.registroprv.observaciones}" label="descripcion" readonly="false"/>
+                    <p:message id="msdescripcion" for="descripcion"/>
                      
                 </p:panelGrid>
             </p:panel>
@@ -95,26 +106,26 @@
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
                                         resetValues="true"
-                                        rendered="#{frmUsuario.botonAgregar}"
-                                        actionListener="#{frmUsuario.guardar()}"/>
+                                        rendered="#{frmProveedor.botonAgregar}"
+                                        actionListener="#{frmProveedor.guardar()}"/>
                      
                      <p:commandButton   value="Editar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmUsuario.botones}"
-                                        actionListener="#{frmUsuario.editar()}"/>
+                                        rendered="#{frmProveedor.botones}"
+                                        actionListener="#{frmProveedor.editar()}"/>
                      
                      <p:commandButton   value="Eliminar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmUsuario.botones}"
-                                        actionListener="#{frmUsuario.eliminar()}"/>
+                                        rendered="#{frmProveedor.botones}"
+                                        actionListener="#{frmProveedor.eliminar()}"/>
 
                     <p:commandButton    value="Cancelar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
                                         disabled="false" resetValues="true"
-                                        actionListener="#{frmUsuario.cancelar()}"
+                                        actionListener="#{frmProveedor.cancelar()}"
                                         immediate="true"/>
                 </f:facet>
              </p:toolbar>
@@ -122,4 +133,5 @@
 
     </h:body>
 </html>
+
 

@@ -5,6 +5,7 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Inventario;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class InventarioFacade extends AbstractFacade<Inventario>{
 
@@ -33,7 +35,7 @@ public class InventarioFacade extends AbstractFacade<Inventario>{
     public Integer cantidadProducto(Integer idProducto){
         Integer salida=0;
         try{
-            if(em!=null && idProducto!=null && idProducto>0){
+            if(idProducto!=null){
                 Query query = em.createQuery("SELECT i.cantidad FROM Inventario i JOIN i.idProducto p WHERE p.idProducto = "+idProducto);
                 salida = (Integer) query.getSingleResult();
                 return salida;

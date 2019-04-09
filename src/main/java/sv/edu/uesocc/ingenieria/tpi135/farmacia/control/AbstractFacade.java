@@ -1,7 +1,5 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
-import com.sun.org.apache.bcel.internal.ExceptionConstants;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

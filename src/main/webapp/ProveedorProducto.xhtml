@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>ProveedorProducto</title>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+        <h:form id="tablaDatos">
+            <p:dataTable id="table"
+                         value="#{frmProveedorProducto.lazymodel}" 
+                         var="tev"
+                         lazy="true"
+                         paginator="true"
+                         rows="5"
+                         selectionMode="single"
+                         selection="#{frmProveedorProducto.registro}"
+                         disabledSelection="#{frmProveedorProducto.seleccion}">
+                
+                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmProveedorProducto.cambiarSeleccion()}" event="rowSelect"/>
+                    
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="ID"/>
+                    </f:facet>		
+                    <h:outputText value="#{tev.idProveedorProducto}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Proveedor"/>
+                    </f:facet>		
+                    <h:outputText value="#{tev.idProveedor.nombreProveedor}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Precio Compra"/>
+                    </f:facet>		
+                    <h:outputText value="#{tev.precioCompra}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descuento Compra"/>
+                    </f:facet>		
+                    <h:outputText value="#{tev.descuentoCompra}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Observaciones"/>
+                    </f:facet>
+                    <h:outputText value="#{tev.observaciones}"/>
+                </p:column>
+            </p:dataTable>    
+        </h:form>
+        
+        
+        <h:form id="frmDetalle">
+             <p:panel id="formulario">
+                <p:focus context="formulario"/>
+                <p:panelGrid id="grid_input" columns="3">
+
+                    <h:outputLabel for="id" value="ID"/>
+                    <p:inputText id="id" value="#{frmProveedorProducto.registro.idProveedorProducto}" label="id" readonly="false"/>
+                    <p:message id="msmid" for="id"/>
+
+                    <h:outputLabel value="Proveedor" for="proveedor"/>
+                    <h:selectOneMenu id="proveedor" value="#{frmProveedorProducto.idProveedorSeleccionado}">
+                                <f:selectItem itemLabel="Seleccionar Proveedor"/> 
+                                <f:selectItems value="#{frmProveedorProducto.listaProveedor}"
+                                               var="Item"
+                                               itemValue="#{Item.idProveedor}"
+                                               itemLabel="#{Item.nombreProveedor.toString()}"
+                                               />
+                    </h:selectOneMenu>
+                    <p:message id="msproveedor" for="proveedor"/>
+                     
+                     <h:outputLabel for="state" value="Precio Compra"/>
+                     <p:inputText  id="state" value="#{frmProveedorProducto.registro.precioCompra}" disabled="false"/>
+                     <p:message id="msstate" for="state"/>
+                     
+                     <h:outputLabel for="descuento" value="Descuento Compra"/>
+                     <p:inputText  id="descuento" value="#{frmProveedorProducto.registro.descuentoCompra}" disabled="false"/>
+                     <p:message id="msdescuento" for="descuento"/>
+
+
+                     <h:outputLabel for="descripcion" value="Observaciones"/>
+                     <p:inputTextarea id="descripcion" value="#{frmProveedorProducto.registro.observaciones}" label="descripcion" readonly="false"/>
+                     <p:message id="msdescripcion" for="descripcion"/>
+                     
+                </p:panelGrid>
+            </p:panel>
+            
+            
+              <p:toolbar id="botones">
+                <f:facet name="left">
+                     <p:commandButton   value="Crear"
+                                        validateClient="true" ajax="true"
+                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
+                                        resetValues="true"
+                                        rendered="#{frmProveedorProducto.botonAgregar}"
+                                        actionListener="#{frmProveedorProducto.guardar()}"/>
+                     
+                     <p:commandButton   value="Editar"
+                                        validateClient="true" ajax="true"
+                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
+                                        rendered="#{frmProveedorProducto.botones}"
+                                        actionListener="#{frmProveedorProducto.editar()}"/>
+                     
+                     <p:commandButton   value="Eliminar"
+                                        validateClient="true" ajax="true"
+                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
+                                        rendered="#{frmProveedorProducto.botones}"
+                                        actionListener="#{frmProveedorProducto.eliminar()}"/>
+
+                    <p:commandButton    value="Cancelar"
+                                        validateClient="true" ajax="true"
+                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
+                                        disabled="false" resetValues="true"
+                                        actionListener="#{frmProveedorProducto.cancelar()}"
+                                        immediate="true"/>
+                </f:facet>
+             </p:toolbar>
+          </h:form>
+
+    </h:body>
+</html>
+

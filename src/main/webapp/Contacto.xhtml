@@ -8,53 +8,47 @@
     <h:head>
         <f:facet name="first">
             <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            <title>Usuario</title>
+            <title>Contacto</title>
         </f:facet>
     </h:head>
 
     <h:body>
         <h:form id="tablaDatos">
             <p:dataTable id="table"
-                         value="#{frmUsuario.lazymodel}" 
-                         var="var"
+                         value="#{frmContacto.lazymodel}" 
+                         var="tev"
                          lazy="true"
                          paginator="true"
                          rows="5"
                          selectionMode="single"
-                         selection="#{frmUsuario.registrousr}"
-                         disabledSelection="#{frmUsuario.seleccion}">
+                         selection="#{frmContacto.registrocof}"
+                         disabledSelection="#{frmContacto.seleccion}">
                 
-                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmUsuario.cambiarSeleccion()}" event="rowSelect"/>
+                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmContacto.cambiarSeleccion()}" event="rowSelect"/>
                     
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="ID"/>
                     </f:facet>		
-                    <h:outputText value="#{var.idUsuario}"/>
+                    <h:outputText value="#{tev.idContacto}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Nombre"/>
                     </f:facet>		
-                    <h:outputText value="#{var.nombre}"/>
+                    <h:outputText value="#{tev.contacto}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Apellido"/>
+                        <h:outputText value="Activo"/>
                     </f:facet>		
-                    <h:outputText value="#{var.apellido}"/>
+                    <h:outputText value="#{tev.estado}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Estado"/>
+                        <h:outputText value="Descripcion"/>
                     </f:facet>		
-                    <h:outputText value="#{var.estado}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Observaciones"/>
-                    </f:facet>		
-                    <h:outputText value="#{var.observaciones}"/>
+                    <h:outputText value="#{tev.descripcion}"/>
                 </p:column>
             </p:dataTable>    
         </h:form>
@@ -66,24 +60,22 @@
                 <p:panelGrid id="grid_input" columns="3">
 
                     <h:outputLabel for="id" value="ID"/>
-                    <p:inputText id="id" value="#{frmUsuario.registrousr.idUsuario}" label="id" readonly="false"/>
+                    <p:inputText id="id" value="#{frmContacto.registrocof.idContacto}" label="id" readonly="false"/>
                     <p:message id="msmid" for="id"/>
 
                     <h:outputLabel for="name" value="Nombre"/>
-                    <p:inputText id="name" value="#{frmUsuario.registrousr.nombre}" label="name" required="true" readonly="false"/>
+                    <p:inputText id="name" value="#{frmContacto.registrocof.contacto}" label="name" required="true" readonly="false"/>
                     <p:message id="msname" for="name"/>
-                    
-                    <h:outputLabel for="apellido" value="Apellido"/>
-                    <p:inputText id="apellido" value="#{frmUsuario.registrousr.apellido}" label="apellido" required="true" readonly="false"/>
-                    <p:message id="msapellido" for="apellido"/>
-                     
-                    <h:outputLabel for="estado" value="Estado"/>
-                    <p:selectBooleanCheckbox id="estado" value="#{frmUsuario.registrousr.estado}" disabled="false"/>
-                    <p:message id="msestado" for="estado"/>
 
-                    <h:outputLabel for="observaciones" value="Observaciones"/>
-                    <p:inputTextarea id="observaciones" value="#{frmUsuario.registrousr.observaciones}" label="observaciones" readonly="false"/>
-                    <p:message id="msobservaciones" for="observaciones"/>
+                     
+                     <h:outputLabel for="state" value="Estado"/>
+                     <p:selectBooleanCheckbox id="state" value="#{frmContacto.registrocof.estado}" disabled="false"/>
+                     <p:message id="msstate" for="state"/>
+
+
+                     <h:outputLabel for="descripcion" value="Descripcion"/>
+                     <p:inputTextarea id="descripcion" value="#{frmContacto.registrocof.descripcion}" label="descripcion" readonly="false"/>
+                     <p:message id="msdescripcion" for="descripcion"/>
                      
                 </p:panelGrid>
             </p:panel>
@@ -95,26 +87,26 @@
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
                                         resetValues="true"
-                                        rendered="#{frmUsuario.botonAgregar}"
-                                        actionListener="#{frmUsuario.guardar()}"/>
+                                        rendered="#{frmContacto.botonAgregar}"
+                                        actionListener="#{frmContacto.guardar()}"/>
                      
                      <p:commandButton   value="Editar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmUsuario.botones}"
-                                        actionListener="#{frmUsuario.editar()}"/>
+                                        rendered="#{frmContacto.botones}"
+                                        actionListener="#{frmContacto.editar()}"/>
                      
                      <p:commandButton   value="Eliminar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmUsuario.botones}"
-                                        actionListener="#{frmUsuario.eliminar()}"/>
+                                        rendered="#{frmContacto.botones}"
+                                        actionListener="#{frmContacto.eliminar()}"/>
 
                     <p:commandButton    value="Cancelar"
                                         validateClient="true" ajax="true"
                                         update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
                                         disabled="false" resetValues="true"
-                                        actionListener="#{frmUsuario.cancelar()}"
+                                        actionListener="#{frmContacto.cancelar()}"
                                         immediate="true"/>
                 </f:facet>
              </p:toolbar>

@@ -5,6 +5,7 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.ProveedorProducto;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class ProveedorProductoFacade extends AbstractFacade<ProveedorProducto>{
 
@@ -33,7 +35,7 @@ public class ProveedorProductoFacade extends AbstractFacade<ProveedorProducto>{
     public Double precioCompraProducto(Integer idProducto){
         double salida=0;
         try{
-            if(em!=null && idProducto!=null && idProducto>0){
+            if(idProducto!=null){
                 Query query = em.createQuery("SELECT pc.precioCompra FROM ProveedorProducto AS pc JOIN pc.productoList p WHERE p.idProducto = "+idProducto);
                 salida = (double) query.getSingleResult();
                 return salida;

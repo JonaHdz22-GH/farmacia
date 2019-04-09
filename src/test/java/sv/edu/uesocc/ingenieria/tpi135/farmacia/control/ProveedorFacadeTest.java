@@ -6,6 +6,7 @@
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
@@ -33,6 +34,7 @@ public class ProveedorFacadeTest {
         System.out.println("testProveedorPorContacto");
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Query query = Mockito.mock(Query.class);
+        Assert.assertEquals(Collections.EMPTY_LIST,pf.proveedorPorContacto(1));
         pf.em = entityManager;
         List<Proveedor> exp = new ArrayList<>();
         List<Proveedor> salida = new ArrayList<>();
@@ -41,6 +43,7 @@ public class ProveedorFacadeTest {
         Mockito.when(entityManager.createQuery("SELECT p FROM Proveedor p JOIN p.medioContactoList mc WHERE mc.idContacto.idContacto = 1")).thenReturn(query);
         Mockito.when(query.getResultList()).thenReturn(salida);
         Assert.assertEquals(exp,pf.proveedorPorContacto(1));
+        Assert.assertEquals(Collections.EMPTY_LIST,pf.proveedorPorContacto(null));
     }
     
     @Test
@@ -48,6 +51,7 @@ public class ProveedorFacadeTest {
         System.out.println("testProveedorPorProducto");
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Query query = Mockito.mock(Query.class);
+        Assert.assertEquals(Collections.EMPTY_LIST,pf.proveedorPorProducto(1));
         pf.em = entityManager;
         List<Proveedor> exp = new ArrayList<>();
         List<Proveedor> salida = new ArrayList<>();
@@ -57,6 +61,7 @@ public class ProveedorFacadeTest {
                .thenReturn(query);
         Mockito.when(query.getResultList()).thenReturn(salida);
         Assert.assertEquals(exp,pf.proveedorPorProducto(1));
+        Assert.assertEquals(Collections.EMPTY_LIST,pf.proveedorPorProducto(null));
     }
     
 }

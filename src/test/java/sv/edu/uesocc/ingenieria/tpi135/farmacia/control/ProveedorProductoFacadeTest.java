@@ -5,6 +5,7 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 
+import java.util.Collections;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -29,6 +30,8 @@ public class ProveedorProductoFacadeTest {
     public void testPrecioCompraProducto() {
         System.out.println("testPrecioCompraProducto");
         EntityManager entityManager = Mockito.mock(EntityManager.class);
+        Double ex=0.0;
+        Assert.assertEquals(ex,ppf.precioCompraProducto(100));
         Query query = Mockito.mock(Query.class);
         Double exp=135.5;
         ppf.em = entityManager;
@@ -36,6 +39,7 @@ public class ProveedorProductoFacadeTest {
                .thenReturn(query);
         Mockito.when(query.getSingleResult()).thenReturn(new Double(135.5));
         Assert.assertEquals(exp,ppf.precioCompraProducto(1));
+        Assert.assertEquals(ex,ppf.precioCompraProducto(null));
     }
     
 }

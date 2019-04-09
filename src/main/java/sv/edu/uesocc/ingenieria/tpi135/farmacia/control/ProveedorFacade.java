@@ -8,6 +8,7 @@ package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Proveedor;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class ProveedorFacade extends AbstractFacade<Proveedor>{
 
@@ -37,7 +39,7 @@ public class ProveedorFacade extends AbstractFacade<Proveedor>{
     public List<Proveedor> proveedorPorContacto(Integer idContacto){
         List<Proveedor> lista = new ArrayList<>();
         try{
-            if( em!=null && idContacto != null && idContacto>0){
+            if(idContacto != null){
                 Query query = em.createQuery("SELECT p FROM Proveedor p JOIN p.medioContactoList mc WHERE mc.idContacto.idContacto = "+idContacto);
                 lista = query.getResultList();
                 return lista;
@@ -52,7 +54,7 @@ public class ProveedorFacade extends AbstractFacade<Proveedor>{
     public List<Proveedor> proveedorPorProducto(Integer idProducto){
         List<Proveedor> lista = new ArrayList<>();
         try{
-            if(em!= null && idProducto!=null && idProducto>0){
+            if(idProducto!=null){
                 Query query = em.createQuery("SELECT p FROM Proveedor p JOIN p.proveedorProductoList pp JOIN pp.productoList prp WHERE prp.idProducto = "+idProducto+" ORDER BY pp.precioCompra ASC");
                 lista = query.getResultList();
                 return lista;

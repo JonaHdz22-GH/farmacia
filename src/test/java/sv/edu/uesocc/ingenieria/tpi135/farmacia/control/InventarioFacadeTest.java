@@ -24,18 +24,22 @@ public class InventarioFacadeTest {
     
     @EJB
     InventarioFacade ifa = new InventarioFacade();
-
+   
     @Test
     public void testCantidadProducto() {
         System.out.println("testCantidadProducto");
         EntityManager entitymanager = Mockito.mock(EntityManager.class);
+        Integer exp=0;
+        Assert.assertEquals(exp,ifa.cantidadProducto(1));
         Query query = Mockito.mock(Query.class);
         ifa.em = entitymanager;
-        Integer exp = 100;
+        Assert.assertEquals(exp,ifa.cantidadProducto(null));
+        exp = 100;
         Mockito.when(entitymanager.createQuery("SELECT i.cantidad FROM Inventario i JOIN i.idProducto p WHERE p.idProducto = 1"))
                .thenReturn(query);
         Mockito.when(query.getSingleResult()).thenReturn(new Integer(100));
         Assert.assertEquals(exp,ifa.cantidadProducto(1));
+        
     }
     
 }

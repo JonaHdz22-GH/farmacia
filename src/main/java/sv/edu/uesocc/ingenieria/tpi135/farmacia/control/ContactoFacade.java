@@ -8,6 +8,7 @@ package sv.edu.uesocc.ingenieria.tpi135.farmacia.control;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Contacto;
  *
  * @author jonahdz
  */
+@LocalBean
 @Stateless
 public class ContactoFacade extends AbstractFacade<Contacto>{
 
@@ -51,7 +53,7 @@ public class ContactoFacade extends AbstractFacade<Contacto>{
     public List<Contacto> contactoPorProveedor(Integer id){
         List<Contacto> lista = new ArrayList<>();
         try{
-            if(em!=null && id!=null && id>0){
+            if(id!=null){
                 Query query = em.createQuery("SELECT c FROM Contacto c JOIN c.medioContactoList p WHERE p.idProveedor.idProveedor = "+id);
                 return lista = query.getResultList();
             }else{

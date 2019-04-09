@@ -9,26 +9,26 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Sucursal;
+import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleVenta;
 
 /**
  *
  * @author jonahdz
  */
-@LocalBean
 @Stateless
-public class SucursalFacade extends AbstractFacade<Sucursal>{
+@LocalBean
+public class DetalleVentaFacade extends AbstractFacade<DetalleVenta>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
-    private EntityManager em;
+    protected EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public SucursalFacade() {
-        super(Sucursal.class);
+    public DetalleVentaFacade() {
+        super(DetalleVenta.class);
     }
     
 }
