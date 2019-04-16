@@ -13,63 +13,71 @@
     </h:head>
 
     <h:body>
+        <p:button outcome="index" value="Salir" style="width: 60px; height: 30px; font-size: 15px; margin: 8px"/>
         <h:form id="tablaDatos">
             <p:dataTable id="table"
                          value="#{frmProveedorProducto.lazymodel}" 
-                         var="tev"
+                         var="var"
                          lazy="true"
                          paginator="true"
                          rows="5"
                          selectionMode="single"
                          selection="#{frmProveedorProducto.registro}"
                          disabledSelection="#{frmProveedorProducto.seleccion}">
-                
-                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmProveedorProducto.cambiarSeleccion()}" event="rowSelect"/>
-                    
+
+                <p:ajax update="tablaDatos  frmDetalle" listener="#{frmProveedorProducto.cambiarSeleccion()}" event="rowSelect"/>
+
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="ID"/>
+                        <h:outputText value="Id ProveedorProducto"/>
                     </f:facet>		
-                    <h:outputText value="#{tev.idProveedorProducto}"/>
+                    <h:outputText value="#{var.idProveedorProducto}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Proveedor"/>
                     </f:facet>		
-                    <h:outputText value="#{tev.idProveedor.nombreProveedor}"/>
+                    <h:outputText value="#{var.idProveedor.nombreProveedor}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Precio Compra"/>
+                        <h:outputText value="Precio"/>
                     </f:facet>		
-                    <h:outputText value="#{tev.precioCompra}"/>
+                    <h:outputText value="#{var.precioCompra}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Descuento Compra"/>
+                        <h:outputText value="Descuento"/>
                     </f:facet>		
-                    <h:outputText value="#{tev.descuentoCompra}"/>
+                    <h:outputText value="#{var.descuentoCompra}"/>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Observaciones"/>
-                    </f:facet>
-                    <h:outputText value="#{tev.observaciones}"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.observaciones}"/>
                 </p:column>
-            </p:dataTable>    
+            </p:dataTable>
+            <h:commandButton id="btnNuevo" value="Nuevo" 
+                             actionListener="#{frmProveedorProducto.nuevoEstado()}"
+                             rendered="#{frmProveedorProducto.estado=='NONE'}"/>
+
+            <h:commandButton id="btnCancelar" value="Cancelar" 
+                             actionListener="#{frmProveedorProducto.btnCancelar()}"
+                             rendered="#{frmProveedorProducto.estado!='NONE'}"/>
         </h:form>
-        
-        
+
+
         <h:form id="frmDetalle">
-             <p:panel id="formulario">
-                <p:focus context="formulario"/>
-                <p:panelGrid id="grid_input" columns="3">
+            <p:panel id="formulario"
+                     rendered="#{frmProveedorProducto.estado=='EDITAR' or frmProveedorProducto.estado=='NUEVO'}">
 
-                    <h:outputLabel for="id" value="ID"/>
-                    <p:inputText id="id" value="#{frmProveedorProducto.registro.idProveedorProducto}" label="id" readonly="false"/>
-                    <p:message id="msmid" for="id"/>
+                <p:panelGrid columns="2">
 
-                    <h:outputLabel value="Proveedor" for="proveedor"/>
+                    <h:outputLabel for="id" value="Id ProveedorProducto"/>
+                    <p:inputText id="id" value="#{frmProveedorProducto.registro.idProveedorProducto}" label="id" readonly="true"/>
+
+                    <h:outputLabel for="proveedor" value="Proveedor"/>
                     <h:selectOneMenu id="proveedor" value="#{frmProveedorProducto.idProveedorSeleccionado}">
                                 <f:selectItem itemLabel="Seleccionar Proveedor"/> 
                                 <f:selectItems value="#{frmProveedorProducto.listaProveedor}"
@@ -78,56 +86,42 @@
                                                itemLabel="#{Item.nombreProveedor.toString()}"
                                                />
                     </h:selectOneMenu>
-                    <p:message id="msproveedor" for="proveedor"/>
-                     
-                     <h:outputLabel for="state" value="Precio Compra"/>
-                     <p:inputText  id="state" value="#{frmProveedorProducto.registro.precioCompra}" disabled="false"/>
-                     <p:message id="msstate" for="state"/>
-                     
-                     <h:outputLabel for="descuento" value="Descuento Compra"/>
-                     <p:inputText  id="descuento" value="#{frmProveedorProducto.registro.descuentoCompra}" disabled="false"/>
-                     <p:message id="msdescuento" for="descuento"/>
+                    
+                    <h:outputLabel for="precio" value="Precio"/>
+                    <p:inputText id="precio" value="#{frmProveedorProducto.registro.precioCompra}" label="precio"/>
+                    
+                    <h:outputLabel for="descuento" value="Descuento"/>
+                    <p:inputText id="descuento" value="#{frmProveedorProducto.registro.descuentoCompra}" label="descuento"/>
+
+                    <h:outputLabel for="observaciones" value="Observaciones"/>
+                    <p:inputText id="observaciones" value="#{frmProveedorProducto.registro.observaciones}" label="observaciones"/>
 
 
-                     <h:outputLabel for="descripcion" value="Observaciones"/>
-                     <p:inputTextarea id="descripcion" value="#{frmProveedorProducto.registro.observaciones}" label="descripcion" readonly="false"/>
-                     <p:message id="msdescripcion" for="descripcion"/>
-                     
                 </p:panelGrid>
-            </p:panel>
-            
-            
-              <p:toolbar id="botones">
-                <f:facet name="left">
-                     <p:commandButton   value="Crear"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        resetValues="true"
-                                        rendered="#{frmProveedorProducto.botonAgregar}"
-                                        actionListener="#{frmProveedorProducto.guardar()}"/>
-                     
-                     <p:commandButton   value="Editar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmProveedorProducto.botones}"
-                                        actionListener="#{frmProveedorProducto.editar()}"/>
-                     
-                     <p:commandButton   value="Eliminar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmProveedorProducto.botones}"
-                                        actionListener="#{frmProveedorProducto.eliminar()}"/>
 
-                    <p:commandButton    value="Cancelar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        disabled="false" resetValues="true"
-                                        actionListener="#{frmProveedorProducto.cancelar()}"
-                                        immediate="true"/>
-                </f:facet>
-             </p:toolbar>
-          </h:form>
+
+                <p:commandButton   value="Crear"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   resetValues="true"
+                                   rendered="#{frmProveedorProducto.botonAgregar}"
+                                   actionListener="#{frmProveedorProducto.guardar()}"/>
+
+                <p:commandButton   value="Editar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmProveedorProducto.botones}"
+                                   actionListener="#{frmProveedorProducto.editar()}"/>
+
+                <p:commandButton   value="Eliminar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmProveedorProducto.botones}"
+                                   actionListener="#{frmProveedorProducto.eliminar()}"/>
+
+
+            </p:panel>
+        </h:form>
 
     </h:body>
 </html>
-

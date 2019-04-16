@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>Detalle</title>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+        <p:button outcome="index" value="Salir" style="width: 60px; height: 30px; font-size: 15px; margin: 8px"/>
+        <h:form id="tablaDatos">
+            <p:dataTable id="table"
+                         value="#{frmDetalle.lazymodel}" 
+                         var="var"
+                         lazy="true"
+                         paginator="true"
+                         rows="5"
+                         selectionMode="single"
+                         selection="#{frmDetalle.registro}"
+                         disabledSelection="#{frmDetalle.seleccion}">
+
+                <p:ajax update="tablaDatos  frmDetalle" listener="#{frmDetalle.cambiarSeleccion()}" event="rowSelect"/>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id Detalle"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.idDetalle}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Producto"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.idDetalleProducto.idProducto.nombre}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Formula"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.formula}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Laboratorio"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.nombreLaboratorio}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Indicaciones"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.indicaciones}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Precauciones"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.precauciones}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Observaciones"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.observaciones}"/>
+                </p:column>
+            </p:dataTable>
+            <h:commandButton id="btnNuevo" value="Nuevo" 
+                             actionListener="#{frmDetalle.nuevoEstado()}"
+                             rendered="#{frmDetalle.estado=='NONE'}"/>
+
+            <h:commandButton id="btnCancelar" value="Cancelar" 
+                             actionListener="#{frmDetalle.btnCancelar()}"
+                             rendered="#{frmDetalle.estado!='NONE'}"/>
+        </h:form>
+
+
+        <h:form id="frmDetalle">
+            <p:panel id="formulario"
+                     rendered="#{frmDetalle.estado=='EDITAR' or frmDetalle.estado=='NUEVO'}">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="id" value="Id Detalle"/>
+                    <p:inputText id="id" value="#{frmDetalle.registro.idDetalle}" label="id" readonly="true"/>
+                    
+                    <h:outputLabel value="Producto" for="producto"/>
+                    <h:selectOneMenu id="producto" value="#{frmDetalle.idDetalleProductoSeleccionado}">
+                                <f:selectItem itemLabel="Seleccionar Producto"/> 
+                                <f:selectItems value="#{frmDetalle.listaDetalleProducto}"
+                                               var="Item"
+                                               itemValue="#{Item.idDetalleProducto}"
+                                               itemLabel="#{Item.idProducto.nombre.toString()}"
+                                               />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel for="formula" value="Formula"/>
+                    <p:inputText id="formula" value="#{frmDetalle.registro.formula}" label="formula"/>
+
+                    <h:outputLabel for="lab" value="Laboratorio"/>
+                    <p:inputText id="lab" value="#{frmDetalle.registro.nombreLaboratorio}" label="lab"/>
+                    
+                    <h:outputLabel for="indicaciones" value="Indicaciones"/>
+                    <p:inputText id="indicaciones" value="#{frmDetalle.registro.indicaciones}" label="inidicaciones"/>
+                    
+                    <h:outputLabel for="precauciones" value="Precauciones"/>
+                    <p:inputText id="precauciones" value="#{frmDetalle.registro.precauciones}" label="precauciones"/>
+                    
+                    <h:outputLabel for="observaciones" value="Observaciones"/>
+                    <p:inputText id="observaciones" value="#{frmDetalle.registro.observaciones}" label="observaciones"/>
+
+
+                </p:panelGrid>
+
+
+                <p:commandButton   value="Crear"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   resetValues="true"
+                                   rendered="#{frmDetalle.botonAgregar}"
+                                   actionListener="#{frmDetalle.guardar()}"/>
+
+                <p:commandButton   value="Editar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmDetalle.botones}"
+                                   actionListener="#{frmDetalle.editar()}"/>
+
+                <p:commandButton   value="Eliminar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmDetalle.botones}"
+                                   actionListener="#{frmDetalle.eliminar()}"/>
+
+
+            </p:panel>
+        </h:form>
+
+    </h:body>
+</html>

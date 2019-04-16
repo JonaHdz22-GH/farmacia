@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>Inventario</title>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+        <p:button outcome="index" value="Salir" style="width: 60px; height: 30px; font-size: 15px; margin: 8px"/>
+        <h:form id="tablaDatos">
+            <p:dataTable id="table"
+                         value="#{frmInventario.lazymodel}" 
+                         var="var"
+                         lazy="true"
+                         paginator="true"
+                         rows="5"
+                         selectionMode="single"
+                         selection="#{frmInventario.registro}"
+                         disabledSelection="#{frmInventario.seleccion}">
+
+                <p:ajax update="tablaDatos  frmDetalle" listener="#{frmInventario.cambiarSeleccion()}" event="rowSelect"/>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id Inventario"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.idInventario}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Producto"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.idProducto.nombre}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sucursal"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.idSucursal.nombreSucursal}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.cantidad}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Precio Venta"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.precioVenta}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Fab"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.fechaFabricacion}">
+                        <f:convertDateTime pattern="dd - MM - yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha Ven"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.fechaVencimiento}">
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Estado"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.estado}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Observaciones"/>
+                    </f:facet>		
+                    <h:outputText value="#{var.observaciones}"/>
+                </p:column>
+            </p:dataTable>
+            <h:commandButton id="btnNuevo" value="Nuevo" 
+                             actionListener="#{frmInventario.nuevoEstado()}"
+                             rendered="#{frmInventario.estado=='NONE'}"/>
+
+            <h:commandButton id="btnCancelar" value="Cancelar" 
+                             actionListener="#{frmInventario.btnCancelar()}"
+                             rendered="#{frmInventario.estado!='NONE'}"/>
+        </h:form>
+
+
+        <h:form id="frmDetalle">
+            <p:panel id="formulario"
+                     rendered="#{frmInventario.estado=='EDITAR' or frmInventario.estado=='NUEVO'}">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="id" value="Id Inventario"/>
+                    <p:inputText id="id" value="#{frmInventario.registro.idInventario}" label="id" readonly="false"/>
+
+                    <h:outputLabel for="producto" value="Producto"/>
+                    <h:selectOneMenu id="producto" value="#{frmInventario.idProductoSeleccionado}">
+                                <f:selectItem itemLabel="Seleccionar Producto"/> 
+                                <f:selectItems value="#{frmInventario.listaProducto}"
+                                               var="Item"
+                                               itemValue="#{Item.idProducto}"
+                                               itemLabel="#{Item.nombre.toString()}"
+                                               />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel for="sucursal" value="Sucursal"/>
+                    <h:selectOneMenu id="sucursal" value="#{frmInventario.idSucursalSeleccionado}">
+                                <f:selectItem itemLabel="Seleccionar Sucursal"/> 
+                                <f:selectItems value="#{frmInventario.listaSucursal}"
+                                               var="Iten"
+                                               itemValue="#{Iten.idSucursal}"
+                                               itemLabel="#{Iten.nombreSucursal.toString()}"
+                                               />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel for="cantidad" value="Cantidad"/>
+                    <p:inputText id="cantidad" value="#{frmInventario.registro.cantidad}" label="cantidad"/>
+                    
+                    <h:outputLabel for="precio" value="Precio Venta"/>
+                    <p:inputText id="precio" value="#{frmInventario.registro.precioVenta}" label="precio"/>
+                    
+                    <h:outputLabel for="fechaf" value="Fecha Fab"/>
+                    <p:calendar id="fechaf" value="#{frmInventario.registro.fechaFabricacion}" pattern="dd-MM-yyyy" mask="true" label="fechaf"/>
+
+                    <h:outputLabel for="fechav" value="Fecha Ven"/>
+                    <p:calendar id="fechav" value="#{frmInventario.registro.fechaVencimiento}" pattern="dd-MM-yyyy" mask="true" label="fechav"/>
+                    
+                    <h:outputLabel for="estado" value="Estado"/>
+                    <p:selectBooleanCheckbox id="estado" value="#{frmInventario.registro.estado}" label="estado"/>
+
+                    <h:outputLabel for="observaciones" value="Observaciones"/>
+                    <p:inputText id="observaciones" value="#{frmInventario.registro.observaciones}" label="observaciones"/>
+
+
+                </p:panelGrid>
+
+
+                <p:commandButton   value="Crear"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   resetValues="true"
+                                   rendered="#{frmInventario.botonAgregar}"
+                                   actionListener="#{frmInventario.guardar()}"/>
+
+                <p:commandButton   value="Editar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmInventario.botones}"
+                                   actionListener="#{frmInventario.editar()}"/>
+
+                <p:commandButton   value="Eliminar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmInventario.botones}"
+                                   actionListener="#{frmInventario.eliminar()}"/>
+
+
+            </p:panel>
+        </h:form>
+
+    </h:body>
+</html>

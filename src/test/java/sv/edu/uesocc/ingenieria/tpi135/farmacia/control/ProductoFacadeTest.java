@@ -29,6 +29,7 @@ public class ProductoFacadeTest {
     @EJB
     ProductoFacade pf = new ProductoFacade();
     
+    
     @Test
     public void testProductoPorProveedor() {
         System.out.println("testProductoPorProveedor");
@@ -81,5 +82,13 @@ public class ProductoFacadeTest {
         Mockito.when(query.getResultList()).thenReturn(salida);
         Assert.assertEquals(exp,pf.productoPorSucursal(1));
         Assert.assertEquals(Collections.EMPTY_LIST,pf.productoPorSucursal(null));
+    }
+    
+    @Test
+    public void testEntityManager(){
+        System.out.println("testEM");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        pf.em = entityManager;
+        Assert.assertEquals(entityManager,pf.getEntityManager());
     }
 }

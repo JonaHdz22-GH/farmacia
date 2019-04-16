@@ -42,4 +42,11 @@ public class ProveedorProductoFacadeTest {
         Assert.assertEquals(ex,ppf.precioCompraProducto(null));
     }
     
+    @Test
+    public void testEntityManager(){
+        System.out.println("testEM");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        ppf.em = entityManager;
+        Assert.assertEquals(entityManager,ppf.getEntityManager());
+    }
 }

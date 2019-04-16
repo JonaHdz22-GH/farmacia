@@ -64,4 +64,12 @@ public class ProveedorFacadeTest {
         Assert.assertEquals(Collections.EMPTY_LIST,pf.proveedorPorProducto(null));
     }
     
+    @Test
+    public void testEntityManager(){
+        System.out.println("testEM");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        pf.em = entityManager;
+        Assert.assertEquals(entityManager,pf.getEntityManager());
+    }
+    
 }

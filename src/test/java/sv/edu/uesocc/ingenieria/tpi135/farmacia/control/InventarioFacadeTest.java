@@ -42,4 +42,12 @@ public class InventarioFacadeTest {
         
     }
     
+    @Test
+    public void testEntityManager(){
+        System.out.println("testEM");
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        ifa.em = entityManager;
+        Assert.assertEquals(entityManager,ifa.getEntityManager());
+    }
+    
 }

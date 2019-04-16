@@ -13,6 +13,7 @@
     </h:head>
 
     <h:body>
+        <p:button outcome="index" value="Salir" style="width: 60px; height: 30px; font-size: 15px; margin: 8px"/>
         <h:form id="tablaDatos">
             <p:dataTable id="table"
                          value="#{frmSucursal.lazymodel}" 
@@ -21,14 +22,14 @@
                          paginator="true"
                          rows="5"
                          selectionMode="single"
-                         selection="#{frmSucursal.registrosuc}"
+                         selection="#{frmSucursal.registro}"
                          disabledSelection="#{frmSucursal.seleccion}">
-                
-                <p:ajax update=":frmDetalle:formulario :frmDetalle:botones" listener="#{frmSucursal.cambiarSeleccion()}" event="rowSelect"/>
-                    
+
+                <p:ajax update="tablaDatos  frmDetalle" listener="#{frmSucursal.cambiarSeleccion()}" event="rowSelect"/>
+
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="ID"/>
+                        <h:outputText value="Id Sucursal"/>
                     </f:facet>		
                     <h:outputText value="#{var.idSucursal}"/>
                 </p:column>
@@ -56,70 +57,64 @@
                     </f:facet>		
                     <h:outputText value="#{var.descripcion}"/>
                 </p:column>
-            </p:dataTable>    
+            </p:dataTable>
+            <h:commandButton id="btnNuevo" value="Nuevo" 
+                             actionListener="#{frmSucursal.nuevoEstado()}"
+                             rendered="#{frmSucursal.estado=='NONE'}"/>
+
+            <h:commandButton id="btnCancelar" value="Cancelar" 
+                             actionListener="#{frmSucursal.btnCancelar()}"
+                             rendered="#{frmSucursal.estado!='NONE'}"/>
         </h:form>
-        
-        
+
+
         <h:form id="frmDetalle">
-             <p:panel id="formulario">
-                <p:focus context="formulario"/>
-                <p:panelGrid id="grid_input" columns="3">
+            <p:panel id="formulario"
+                     rendered="#{frmSucursal.estado=='EDITAR' or frmSucursal.estado=='NUEVO'}">
 
-                    <h:outputLabel for="id" value="ID"/>
-                    <p:inputText id="id" value="#{frmSucursal.registrosuc.idSucursal}" label="id" readonly="false"/>
-                    <p:message id="msmid" for="id"/>
+                <p:panelGrid columns="2">
 
-                    <h:outputLabel for="name" value="Nombre"/>
-                    <p:inputText id="name" value="#{frmSucursal.registrosuc.nombreSucursal}" label="name" required="true" readonly="false"/>
-                    <p:message id="msname" for="name"/>
+                    <h:outputLabel for="id" value="Id Sucursal"/>
+                    <p:inputText id="id" value="#{frmSucursal.registro.idSucursal}" label="id" readonly="true"/>
 
-                     
-                     <h:outputLabel for="direccion" value="Direccion"/>
-                     <p:inputText id="direccion" value="#{frmSucursal.registrosuc.direccionSucursal}" disabled="false"/>
-                     <p:message id="msdireccion" for="direccion"/>
-                     
-                     <p:outputLabel for="telefono" value="Telefono"/>
-                     <p:inputText id="telefono" value="#{frmSucursal.registrosuc.telefonoSucursal}" disabled="false"/>
-                     <p:message id="mstelefono" for="telefono"/>
+                    <h:outputLabel for="sucursal" value="Nombre"/>
+                    <p:inputText id="sucursal" value="#{frmSucursal.registro.nombreSucursal}" label="sucursal"/>
 
-                     <h:outputLabel for="descripcion" value="Descripcion"/>
-                     <p:inputTextarea id="descripcion" value="#{frmSucursal.registrosuc.descripcion}" label="descripcion" readonly="false"/>
-                     <p:message id="msdescripcion" for="descripcion"/>
-                     
+                    <h:outputLabel for="direccion" value="Direccion"/>
+                    <p:inputText  id="direccion" value="#{frmSucursal.registro.direccionSucursal}" label="direccion"/>
+                    
+                    <h:outputLabel for="telefono" value="Telefono"/>
+                    <p:inputText id="telefono" value="#{frmSucursal.registro.telefonoSucursal}" label="telefono"/>
+
+                    <h:outputLabel for="descripcion" value="Descripcion"/>
+                    <p:inputText id="descripcion" value="#{frmSucursal.registro.descripcion}" label="descripcion"/>
+
+
                 </p:panelGrid>
-            </p:panel>
-            
-            
-              <p:toolbar id="botones">
-                <f:facet name="left">
-                     <p:commandButton   value="Crear"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        resetValues="true"
-                                        rendered="#{frmSucursal.botonAgregar}"
-                                        actionListener="#{frmSucursal.guardar()}"/>
-                     
-                     <p:commandButton   value="Editar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmSucursal.botones}"
-                                        actionListener="#{frmSucursal.editar()}"/>
-                     
-                     <p:commandButton   value="Eliminar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        rendered="#{frmSucursal.botones}"
-                                        actionListener="#{frmSucursal.eliminar()}"/>
 
-                    <p:commandButton    value="Cancelar"
-                                        validateClient="true" ajax="true"
-                                        update=":tablaDatos frmDetalle:formulario frmDetalle:botones"
-                                        disabled="false" resetValues="true"
-                                        actionListener="#{frmSucursal.cancelar()}"
-                                        immediate="true"/>
-                </f:facet>
-             </p:toolbar>
-          </h:form>
+
+                <p:commandButton   value="Crear"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   resetValues="true"
+                                   rendered="#{frmSucursal.botonAgregar}"
+                                   actionListener="#{frmSucursal.guardar()}"/>
+
+                <p:commandButton   value="Editar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmSucursal.botones}"
+                                   actionListener="#{frmSucursal.editar()}"/>
+
+                <p:commandButton   value="Eliminar"
+                                   validateClient="true" ajax="true"
+                                   update=":tablaDatos frmDetalle:formulario "
+                                   rendered="#{frmSucursal.botones}"
+                                   actionListener="#{frmSucursal.eliminar()}"/>
+
+
+            </p:panel>
+        </h:form>
 
     </h:body>
 </html>
