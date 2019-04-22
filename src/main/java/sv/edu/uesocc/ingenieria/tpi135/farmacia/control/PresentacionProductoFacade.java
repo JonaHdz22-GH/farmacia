@@ -18,7 +18,7 @@ public class PresentacionProductoFacade extends AbstractFacade<PresentacionProdu
     protected EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 

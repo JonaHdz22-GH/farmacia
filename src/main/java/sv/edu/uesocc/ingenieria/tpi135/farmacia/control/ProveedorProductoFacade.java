@@ -16,10 +16,10 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.ProveedorProducto;
 public class ProveedorProductoFacade extends AbstractFacade<ProveedorProducto>{
 
     @PersistenceContext(unitName = "FarmaciaPU")
-    protected EntityManager em;
+    public EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 

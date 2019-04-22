@@ -18,7 +18,7 @@ public class DetalleProductoFacade extends AbstractFacade<DetalleProducto>{
     protected EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" 
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+                http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="integration-test-farmacia" transaction-type="RESOURCE_LOCAL">
+        
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.MedioContacto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Factura</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.FormaPago</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Contacto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleVenta</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.ProveedorProducto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Proveedor</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.TipoPresentacion</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.PresentacionProducto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.DetalleProducto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.TipoDescuento</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Pago</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Descuento</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Detalle</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Inventario</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Producto</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Sucursal</class>
+        <class>sv.edu.uesocc.ingenieria.tpi135.farmacia.entity.Usuario</class>
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:testDB;create=true"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>

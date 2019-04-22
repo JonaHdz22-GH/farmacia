@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.Dependent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import sv.edu.uesocc.ingenieria.tpi135.farmacia.control.AbstractFacade;
@@ -15,7 +14,9 @@ import sv.edu.uesocc.ingenieria.tpi135.farmacia.control.AbstractFacade;
 /**
  *
  * @author jonahdz
+ * @param <T>
  */
+@Dependent
 public abstract class AbstractFrmDataModel<T> {
 
     protected LazyDataModel<T> lazymodel;
@@ -37,12 +38,6 @@ public abstract class AbstractFrmDataModel<T> {
     public void nuevoEstado() {
         stdCrud = EstadosCRUD.NUEVO;
         this.registro = registroNew();
-    }
-    
-    
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
     @PostConstruct
@@ -70,8 +65,8 @@ public abstract class AbstractFrmDataModel<T> {
                     return loadDatos(first, pageSize, sortField, sortOrder, filters);
                 }
             };
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        } catch (Exception ex) {
+            throw ex;
         }
     }
     
@@ -103,15 +98,14 @@ public abstract class AbstractFrmDataModel<T> {
     public abstract Object clavePorDatos(T Object);
     
     public void guardar(){
-        if(getFacade()!=null){
+        if(getFacade() != null){
             try{
                 getFacade().create(registro);
-                addMessage("Registro Guardado");
             }catch(Exception ex){
-                System.out.println("ERROR: "+ex);
-                addMessage("Fallo Guardar Registro");
+                throw ex;
             }
         }
+        System.out.println("No Pasa Ni Mix");
         limpiar();
     }
     
@@ -119,10 +113,8 @@ public abstract class AbstractFrmDataModel<T> {
         if(getFacade()!=null){
             try{
                 getFacade().edit(this.registro);
-                addMessage("Registro Editado");
             }catch(Exception ex){
-                System.out.println("ERROR: "+ex);
-                addMessage("Fallo Editar Registro");
+                throw ex;
             }
         }
         limpiar();
@@ -132,10 +124,8 @@ public abstract class AbstractFrmDataModel<T> {
         if(getFacade()!=null){
             try{
                 getFacade().remove(this.registro);
-                addMessage("Registro Eliminado");
             }catch(Exception ex){
-                System.out.println("ERROR: "+ex);
-                addMessage("Fallo Eliminar Registro");
+                throw ex;
             }
         }
         limpiar();
@@ -207,6 +197,7 @@ public abstract class AbstractFrmDataModel<T> {
     public void setStdCrud(EstadosCRUD stdCrud) {
         this.stdCrud = stdCrud;
     }
+    
     
     
 }

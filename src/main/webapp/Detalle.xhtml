@@ -89,9 +89,9 @@
                     <h:outputLabel for="id" value="Id Detalle"/>
                     <p:inputText id="id" value="#{frmDetalle.registro.idDetalle}" label="id" readonly="true"/>
                     
-                    <h:outputLabel value="Producto" for="producto"/>
+                    <h:outputLabel value="Detalle" for="producto"/>
                     <h:selectOneMenu id="producto" value="#{frmDetalle.idDetalleProductoSeleccionado}">
-                                <f:selectItem itemLabel="Seleccionar Producto"/> 
+                                <f:selectItem itemLabel="Seleccionar Detalle"/> 
                                 <f:selectItems value="#{frmDetalle.listaDetalleProducto}"
                                                var="Item"
                                                itemValue="#{Item.idDetalleProducto}"

@@ -18,7 +18,7 @@ public class MedioContactoFacade extends AbstractFacade<MedioContacto>{
     protected EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 

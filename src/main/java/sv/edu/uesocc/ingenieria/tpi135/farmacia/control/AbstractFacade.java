@@ -18,7 +18,7 @@ public abstract class AbstractFacade<T> {
         this.entityClass = entityClass;
     }
 
-    protected abstract EntityManager getEntityManager();
+    public abstract EntityManager getEntityManager();
 
     public void create(T entity) {
 
@@ -27,7 +27,7 @@ public abstract class AbstractFacade<T> {
             if (em != null) {
                 em.persist(entity);
             } else {
-                throw new IllegalStateException("em null");
+                throw new IllegalStateException();
             }
         } else {
             throw new IllegalArgumentException("entity null");
