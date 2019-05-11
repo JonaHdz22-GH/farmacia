@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import jdk.nashorn.internal.parser.TokenType;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -38,6 +39,7 @@ public abstract class AbstractFacadeTest<T> {
     private final Class<T> entityClass;
     List<T> list;
     T entity;
+    boolean aser = false;
 
     public abstract AbstractFacade facade();
 
@@ -101,6 +103,14 @@ public abstract class AbstractFacadeTest<T> {
         System.out.println("testCreate");
         facade().create(entity);
         verify(entityManager, times(1)).persist(entity);
+        try {
+            AbstractFacade fac = Mockito.spy(facade());
+            when(fac.getEntityManager()).thenReturn(null);
+            fac.create(entity);
+        } catch (IllegalStateException e) {
+            aser=true;
+        }
+        assertTrue(aser);
         facade().create(null);
     }
 
@@ -112,6 +122,14 @@ public abstract class AbstractFacadeTest<T> {
         System.out.println("testEdit");
         facade().edit(entity);
         verify(entityManager, times(1)).merge(entity);
+        try {
+            AbstractFacade fac = Mockito.spy(facade());
+            when(fac.getEntityManager()).thenReturn(null);
+            fac.edit(entity);
+        } catch (IllegalStateException e) {
+            aser=true;
+        }
+        assertTrue(aser);
         facade().edit(null);
     }
 
@@ -123,6 +141,14 @@ public abstract class AbstractFacadeTest<T> {
         System.out.println("testRemove");
         facade().remove(entity);
         verify(entityManager, times(1)).remove(entityManager.merge(entity));
+        try {
+            AbstractFacade fac = Mockito.spy(facade());
+            when(fac.getEntityManager()).thenReturn(null);
+            fac.remove(entity);
+        } catch (IllegalStateException e) {
+            aser=true;
+        }
+        assertTrue(aser);
         facade().remove(null);
     }
 
@@ -135,6 +161,14 @@ public abstract class AbstractFacadeTest<T> {
         when(entityManager.find(eq(entityClass), Mockito.any(Integer.class))).thenReturn(entity);
         T result = (T) facade().findById(1);
         assertEquals(entity, result);
+        try {
+            AbstractFacade fac = Mockito.spy(facade());
+            when(fac.getEntityManager()).thenReturn(null);
+            fac.findById(entity);
+        } catch (IllegalStateException e) {
+            aser=true;
+        }
+        assertTrue(aser);
         facade().findById(null);
     }
 

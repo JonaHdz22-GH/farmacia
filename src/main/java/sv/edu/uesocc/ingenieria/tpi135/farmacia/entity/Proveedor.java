@@ -7,6 +7,7 @@ package sv.edu.uesocc.ingenieria.tpi135.farmacia.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -135,6 +136,7 @@ public class Proveedor implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public List<MedioContacto> getMedioContactoList() {
         return medioContactoList;
     }
@@ -144,6 +146,7 @@ public class Proveedor implements Serializable {
     }
 
     @XmlTransient
+    @JsonbTransient
     public List<ProveedorProducto> getProveedorProductoList() {
         return proveedorProductoList;
     }

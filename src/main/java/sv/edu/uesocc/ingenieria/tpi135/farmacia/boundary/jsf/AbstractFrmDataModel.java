@@ -3,8 +3,6 @@ package sv.edu.uesocc.ingenieria.tpi135.farmacia.boundary.jsf;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import org.primefaces.model.LazyDataModel;
@@ -80,8 +78,8 @@ public abstract class AbstractFrmDataModel<T> {
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        } finally {
+            throw ex;
+        }finally {
             if (salida == null) {
                 salida = new ArrayList();
             }
@@ -105,14 +103,13 @@ public abstract class AbstractFrmDataModel<T> {
                 throw ex;
             }
         }
-        System.out.println("No Pasa Ni Mix");
         limpiar();
     }
     
     public void editar(){
         if(getFacade()!=null){
             try{
-                getFacade().edit(this.registro);
+                getFacade().edit(registro);
             }catch(Exception ex){
                 throw ex;
             }
@@ -123,7 +120,7 @@ public abstract class AbstractFrmDataModel<T> {
     public void eliminar(){
         if(getFacade()!=null){
             try{
-                getFacade().remove(this.registro);
+                getFacade().remove(registro);
             }catch(Exception ex){
                 throw ex;
             }

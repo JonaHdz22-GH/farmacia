@@ -35,7 +35,6 @@ public class FrmContactoTest extends AbstractFrmDataModelTest<Contacto>{
     @InjectMocks
     Contacto cotacto = new Contacto();
     
-    
     @Override
     public AbstractFacade getFacade() {
         return contactoFacade;
@@ -81,23 +80,23 @@ public class FrmContactoTest extends AbstractFrmDataModelTest<Contacto>{
     @Test
     public void testGetFacade(){
         System.out.println("testGetFacade");
-        FrmContacto frm = Mockito.spy(frmContacto);
-        frm.getFacade();
-        Mockito.verify(frm).getFacade();
+        FrmContacto fre = Mockito.spy(frmContacto);
+        fre.getFacade();
+        Mockito.verify(fre).getFacade();
     }
     
     @Test
     public void testRegistroNew(){
         System.out.println("testRegistroNew");
-        FrmContacto frm = Mockito.spy(frmContacto);
-        Assert.assertEquals(frm.registroNew(),new Contacto());
+        FrmContacto fre = Mockito.spy(frmContacto);
+        Assert.assertEquals(fre.registroNew(),new Contacto());
     }
     
     @Test
     public void testInicializar(){
         System.out.println("testInicializar");
-        FrmContacto frm = Mockito.spy(frmContacto);
-        frm.inicializar();
-        Mockito.verify(frm).inicializar();
+        FrmContacto fre = Mockito.spy(frmContacto);
+        fre.inicializar();
+        Mockito.verify(fre).inicializar();
     }
 }

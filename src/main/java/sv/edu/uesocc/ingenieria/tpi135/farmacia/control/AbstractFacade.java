@@ -30,7 +30,7 @@ public abstract class AbstractFacade<T> {
                 throw new IllegalStateException();
             }
         } else {
-            throw new IllegalArgumentException("entity null");
+            throw new IllegalArgumentException();
         }
 
     }
@@ -41,35 +41,95 @@ public abstract class AbstractFacade<T> {
             if (em != null) {
                 em.merge(entity);
             } else {
-                throw new IllegalStateException("em null");
+                throw new IllegalStateException();
             }
         } else {
-            throw new IllegalArgumentException("entity null");
+            throw new IllegalArgumentException();
         }
     }
 
     public void remove(T entity) {
-        if(entity != null){
+        if (entity != null) {
             EntityManager em = getEntityManager();
             if (em != null) {
-                em.remove(em.merge(entity));   
+                em.remove(em.merge(entity));
             } else {
-                throw new IllegalStateException("em null");
+                throw new IllegalStateException();
             }
-        }else{
-            throw new IllegalArgumentException("entity null");
+        } else {
+            throw new IllegalArgumentException();
         }
+    }
+    
+    /**
+     * metodo para CREAR un archivo mediante los servicios REST
+     * @param entity
+     * @return 
+     */
+    public T crear(T entity) {
+        EntityManager em = getEntityManager();
+        try {
+            if (em != null && entity != null) {
+                em.persist(entity);
+                return entity;
+            } else {
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
+        return null;
+    }
+
+    /**
+     * metodo para EDITAR un archivo mediante los servicios REST
+     * @param entity
+     * @return 
+     */
+    public T editar(T entity) {
+        EntityManager em = getEntityManager();
+        try {
+            if (em != null && entity != null) {
+                em.merge(entity);
+                return entity;
+            } else {
+                System.out.println("algo es nulo");
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
+
+        return null;
+    }
+
+    /**
+     * metodo para ELIMINAR un archivo mediante los servicios REST
+     * @param entity
+     * @return 
+     */
+    public T remover(T entity) {
+        EntityManager em = getEntityManager();
+        try {
+            if (em != null && entity != null) {
+                em.remove(getEntityManager().merge(entity));
+                return entity;
+            } else {
+                System.out.println("algo es nulo");
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
+        return null;
     }
 
     public T findById(Object id) {
         EntityManager em = getEntityManager();
         if (id != null) {
             if (em != null) {
-                return (T) em.find(entityClass,id);
+                return (T) em.find(entityClass, id);
             }
-            throw new IllegalStateException("em null");
+            throw new IllegalStateException();
         }
-        throw new IllegalArgumentException("id null");
+        throw new IllegalArgumentException();
     }
 
     public List<T> findAll() {
