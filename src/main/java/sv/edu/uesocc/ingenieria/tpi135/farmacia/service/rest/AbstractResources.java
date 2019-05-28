@@ -69,6 +69,7 @@ public abstract class AbstractResources<T> implements Serializable {
      * @param entity datos que recibe de la entidad json
      * @return estado OK // NOT FOUND error
      */
+    
     @PUT
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -173,7 +174,7 @@ public abstract class AbstractResources<T> implements Serializable {
             try {
                 List<T> lista = facade().findRange(first, pagesize);
                 if (lista != null) {
-                    return Response.ok(lista).header("Total-Registros", facade().count()).build();
+                    return Response.ok(lista).header("Access-Control-Allow-Origin","*").header("Total-Registros", facade().count()).build();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
