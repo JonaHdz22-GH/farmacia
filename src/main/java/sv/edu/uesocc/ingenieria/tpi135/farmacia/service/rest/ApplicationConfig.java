@@ -31,6 +31,9 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.DetalleVentaResources.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.FormaPagoResources.class);
+        resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.ProductoResources.class);
+        resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.ProveedorResources.class);
+        resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.SucursalResources.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.TipoDescuentoResources.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.UsuarioResources.class);
     }
