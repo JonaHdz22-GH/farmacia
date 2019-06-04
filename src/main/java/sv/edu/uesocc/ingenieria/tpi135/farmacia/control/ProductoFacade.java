@@ -30,6 +30,11 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         super(Producto.class);
     }
 
+    /**
+     * metodo para
+     * @param idProveedor
+     * @return 
+     */
     public List<Producto> productoPorProveedor(Integer idProveedor) {
         List<Producto> salida = new ArrayList<>();
         try {
