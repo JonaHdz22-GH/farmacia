@@ -31,7 +31,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
 
     /**
-     * metodo para hhhdhhdh
+     * metodo para
      * @param idProveedor
      * @return 
      */
