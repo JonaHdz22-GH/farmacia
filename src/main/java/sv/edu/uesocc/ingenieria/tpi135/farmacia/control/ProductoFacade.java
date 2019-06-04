@@ -45,6 +45,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         }
     }
 
+    
     public List<Producto> findLikeProducto(String text) {
         List<Producto> lista = new ArrayList<>();
         try {
@@ -60,6 +61,11 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         }
     }
 
+    /**
+     * metodo de busqueda por id de la sucursales 
+     * @param idSucursal
+     * @return 
+     */
     public List<Producto> productoPorSucursal(Integer idSucursal) {
         List<Producto> lista = new ArrayList<>();
         try {
