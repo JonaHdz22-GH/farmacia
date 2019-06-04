@@ -46,9 +46,7 @@ public abstract class AbstractResources<T> implements Serializable {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(T entity) {
-
         if (entity != null) {
-
             try {
                 if (facade() != null) {
                     T respuesta = facade().crear(entity);
@@ -70,15 +68,11 @@ public abstract class AbstractResources<T> implements Serializable {
      * @param entity datos que recibe de la entidad json
      * @return estado OK // NOT FOUND error
      */
-    
     @PUT
-    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response edit(T entity) {
-
         if (entity != null) {
-
             try {
                 if (facade() != null) {
                     T respuesta = facade().editar(entity);
@@ -129,7 +123,7 @@ public abstract class AbstractResources<T> implements Serializable {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response findById(@QueryParam("id") Integer id) {
+    public Response findById(@PathParam("id") Integer id) {
         if (id != null) {
             try {
                 T salida = facade().findById(id);
@@ -152,7 +146,7 @@ public abstract class AbstractResources<T> implements Serializable {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response Count() {
+    public Response count() {
         if (facade() != null) {
             return Response.ok(facade().count()).header("Total-Registro", facade().count()).build();
         }
@@ -170,12 +164,12 @@ public abstract class AbstractResources<T> implements Serializable {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response findByRange(@QueryParam("first") @DefaultValue("0") int first,
-            @QueryParam("pagesize") @DefaultValue("10") int pagesize) {
+            @QueryParam("pagesize") @DefaultValue("50") int pagesize) {
         if (first >= 0 && first < pagesize) {
             try {
                 List<T> lista = facade().findRange(first, pagesize);
                 if (lista != null) {
-                    return Response.ok(lista).header("Access-Control-Allow-Origin","*").header("Total-Registros", facade().count()).build();
+                    return Response.ok(lista).header("Total-Registros", facade().count()).build();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);

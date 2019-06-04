@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.CorsFilter.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.DetalleVentaResources.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.FormaPagoResources.class);
         resources.add(sv.edu.uesocc.ingenieria.tpi135.farmacia.service.rest.ProductoResources.class);
