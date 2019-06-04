@@ -43,6 +43,11 @@ public class UsuarioResources extends AbstractResources<Usuario>{
         return new Usuario();
     }
     
+    /**
+     * metodo de filtrado para la tabla usuario busca en los campos
+     * @param filtro parametros para recibir
+     * @return lista con datos semejantes
+     */
     @GET
     @Path("like")
     @Produces({MediaType.APPLICATION_JSON})
