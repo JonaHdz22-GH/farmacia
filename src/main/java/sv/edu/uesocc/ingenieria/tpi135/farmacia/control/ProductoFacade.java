@@ -31,7 +31,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
 
     /**
-     * metodo para
+     * metodo para mostrar los productos filtrados por el id del proveedor
      * @param idProveedor
      * @return 
      */
