@@ -30,6 +30,11 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         super(Producto.class);
     }
 
+    /**
+     * metodo para mostrar los productos filtrados por el id del proveedor
+     * @param idProveedor filtrado para la lista
+     * @return 
+     */
     public List<Producto> productoPorProveedor(Integer idProveedor) {
         List<Producto> salida = new ArrayList<>();
         try {
@@ -45,6 +50,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         }
     }
 
+    
     public List<Producto> findLikeProducto(String text) {
         List<Producto> lista = new ArrayList<>();
         try {
@@ -60,6 +66,11 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         }
     }
 
+    /**
+     * metodo de busqueda por id de la sucursales 
+     * @param idSucursal
+     * @return 
+     */
     public List<Producto> productoPorSucursal(Integer idSucursal) {
         List<Producto> lista = new ArrayList<>();
         try {

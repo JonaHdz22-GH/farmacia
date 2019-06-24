@@ -36,10 +36,10 @@ public class ProductoResources extends AbstractResources<Producto> {
     protected Producto nuevo() {
         return new Producto();
     }
-    
-    
-        /**
-     * metodo para contar el total de registro
+
+    /**
+     * metodo con consulta que ordena los campos de producto y tablas
+     * relacionadas a motrar de menor a  mayor
      *
      * @return total de registro estado OK // error NOT FOUND datos 0
      */
