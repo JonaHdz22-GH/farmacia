@@ -1,0 +1,27 @@
+version: '2'
+services:
+    mariadbservice:
+        image: 'mariadb-tpi'
+        build: ./mariadb-docker/.
+        container_name: 'mariadb'
+        environment: 
+        - 'MYSQL_ROOT_PASSWORD=root'
+        ports:
+        - "3306:3306"
+    payaraservice: 
+        image: 'payara-tpi'
+        build: ./payara-docker/.   
+        container_name: 'webserver'
+        depends_on:
+        - mariadbservice
+        ports:
+        - "4848:4848"
+        - "8080:8080"
+    frontend:
+        image: 'apache-server-tpi'
+        build: ./Front-End/.
+        container_name: 'client'
+        depends_on:
+        - payaraservice
+        ports:
+        - "80:80"
