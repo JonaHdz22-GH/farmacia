@@ -17,11 +17,3 @@ services:
         ports:
         - "4848:4848"
         - "8080:8080"
-    frontend:
-        image: 'apache-server-tpi'
-        build: ./Front-End/.
-        container_name: 'client'
-        depends_on:
-        - payaraservice
-        ports:
-        - "80:80"
