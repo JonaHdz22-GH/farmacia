@@ -1,4 +1,4 @@
-version: '2'
+version: '3.6'
 services:
     mariadbservice:
         image: 172.17.0.1:5000/${VERSION}
