@@ -1,15 +1,19 @@
 version: '2'
 services:
     mariadbservice:
-        image: 'mariadb-tpi'
+        image: 172.17.0.1:5000/${VERSION}
         build: ./mariadb-docker/.
         container_name: 'mariadb'
         environment: 
         - 'MYSQL_ROOT_PASSWORD=root'
         ports:
         - "3306:3306"
+        deploy:
+          replicas:1
+          restart_policy:
+            condition: on-failure
     payaraservice: 
-        image: 'payara-tpi'
+        image: 172.17.0.1:5000/${VERSION}
         build: ./payara-docker/.   
         container_name: 'webserver'
         depends_on:
@@ -17,3 +21,7 @@ services:
         ports:
         - "4848:4848"
         - "8080:8080"
+        deploy:
+          replicas:1
+          restart_policy:
+            condition: on-failure
