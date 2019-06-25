@@ -1,7 +1,5 @@
 FROM payara/server-full:5.183
 
-MAINTAINER Luis Guillermo Garcìa Aguilar luisggaguilar@gmail.com
-
 RUN wget -O /opt/payara/glassfish/lib/maridb.jar \
 	 https://downloads.mariadb.com/Connectors/java/connector-java-2.3.0/mariadb-java-client-2.3.0.jar && \
 	echo 'AS_ADMIN_PASSWORD=admin' > /opt/payara/pass.txt
