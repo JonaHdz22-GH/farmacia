@@ -4,7 +4,7 @@ services:
         image: 172.17.0.1:5000/${VERSION}
         build: ./payara-docker/.
         extra_hosts:
-          - mariadbservice: 172.24.0.2
+          - mariadbservice:"172.24.0.2"
         container_name: webserver
         ports:
         - "4848:4848"
