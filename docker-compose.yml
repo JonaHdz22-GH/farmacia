@@ -1,7 +1,7 @@
 version: '3.6'
 services:
     payaraservice: 
-        image: 172.17.0.1:5000/${VERSION}
+        image: 192.168.43.253:5000/${VERSION}
         build: ./payara-docker/.
         container_name: webserver
         ports:
