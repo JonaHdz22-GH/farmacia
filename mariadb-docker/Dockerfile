@@ -1,7 +1,5 @@
 FROM mariadb:10.1.38
 
-MAINTAINER Luis Guillermo Garcìa Aguilar luisggaguilar@gmail.com
-
 ENV MYSQL_ROOT_PASSWORD=user1
 ENV MYSQL_DATABASE=Farmacia
 
