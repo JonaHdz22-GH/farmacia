@@ -9,7 +9,7 @@ WORKDIR /opt/payara/bin
 RUN ./asadmin start-domain && \
 	./asadmin -I false --user admin --passwordfile /opt/payara/pass.txt create-jdbc-connection-pool \
 	--datasourceclassname org.mariadb.jdbc.MariaDbDataSource --restype javax.sql.DataSource \
-	--property user=root:password=root:servername=0.0.0.0:portnumber=3306:databasename=Farmacia farmacia && \
+	--property user=root:password=root:servername=mariadbservice:portnumber=3306:databasename=Farmacia farmacia && \
 	./asadmin -I false --user admin --passwordfile /opt/payara/pass.txt create-jdbc-resource \
 	--connectionpoolid farmacia jdbc/farmacia && \
 	./asadmin -I false --user admin --passwordfile /opt/payara/pass.txt stop-domain
