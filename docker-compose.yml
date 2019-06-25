@@ -9,7 +9,7 @@ services:
         ports:
         - "3306:3306"
         deploy:
-          replicas:1
+          replicas: 1
           restart_policy:
             condition: on-failure
     payaraservice: 
@@ -22,6 +22,6 @@ services:
         - "4848:4848"
         - "8080:8080"
         deploy:
-          replicas:1
+          replicas: 1
           restart_policy:
             condition: on-failure
