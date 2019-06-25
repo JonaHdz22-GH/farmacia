@@ -2,13 +2,13 @@ version: '3.6'
 services:
     payaraservice: 
         image: 172.17.0.1:5000/${VERSION}
-        build: ./payara-docker/.   
+        build: ./payara-docker/.
+        extra_hosts:
+          - mariadbservice: 172.24.0.2
         container_name: webserver
         ports:
         - "4848:4848"
         - "8080:8080"
-        extra_hosts:
-          - "mariadbservice:172.24.0.2"
         deploy:
           replicas: 1
           restart_policy:
